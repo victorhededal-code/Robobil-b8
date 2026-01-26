@@ -3,16 +3,16 @@ what to do today
 
 uge 1 - J   
 
-skal kunne kore 
+skal kunne køre 
 
-vere samlet og lodet 
+være samlet og lodet 
 
 kunne bruge sensorene 
 
 
 uge 2 - V 
 
-bruge malinger 
+bruge målinger 
 
 stop function 
 
@@ -21,7 +21,7 @@ dreje function
 
 uge 3 - J
 
-start tradlos comutikation 
+start tradløs comutikation 
 
 mode skifte 
 
@@ -29,7 +29,7 @@ mode skifte
 uge 4 - V 
 
 sumo mode  
-wall ferdig 
+wall færdig 
 
 uge 5 - M 
 
