@@ -1,16 +1,40 @@
+from machine import Pin
+from time import sleep
+def test_movement():
+    print("running test_movement")
+    motor1 = Make_DCmotor(16,17,18)
+    motor2 = Make_DCmotor(19,20,21)
+    motor1.backward()
+    motor2.forward()
+    sleep(2)
+    motor1.forward()
+    motor2.backward()
+    sleep(2)
+    motor1.stop()
+    motor2.stop()
 
-def make_DCmotor():
-    class DCMotor:
-        # the min_duty and max_duty are defined for 1000Hz frequency
-        # you can pass as arguments
-        def __init__(self, pin1, pin2, enable_pin, min_duty=15000, max_duty=65535):
-            self.pin1 = pin1
-            self.pin2 = pin2
-            self.enable_pin = enable_pin
-            self.min_duty = min_duty
-            self.max_duty = max_duty
-            # speed value can be between 0 and 100
-    return
+class Make_DCmotor:
+    def __init__(self, pin1, pin2, enable_pin):
+        print(self,"making motor")
+        self.pin1 = Pin(pin1,Pin.OUT)
+        self.pin2 = Pin(pin2,Pin.OUT)
+        self.enable_pin = Pin(enable_pin,Pin.OUT)
+    def forward(self):
+        print(self,"moving forward")
+        self.pin1.value(1)
+        self.pin2.value(0)
+        self.enable_pin.value(1)
+    def backward(self):
+        print(self,"moving backward")
+        self.pin1.value(0)
+        self.pin2.value(1)
+        self.enable_pin.value(1)
+    def stop(self):
+        print(self,"stopping motor")
+        self.pin1.value(1)
+        self.pin2.value(1)
+        self.enable_pin.value(0)
+
 
 
 
@@ -37,9 +61,3 @@ def duty_cycle(self, speed):
     else:
         duty_cycle = int(self.min_duty + (self.max_duty - self.min_duty) * ((self.speed - 1) / (100 - 1)))
     return duty_cycle
-
-def drej_til_højre():
-    pass
-
-def drej_til_venstre():
-    pass
