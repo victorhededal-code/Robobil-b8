@@ -3,18 +3,18 @@ what to do today
 
 uge 1 - J   
 
-skal kunne køre 
+skal kunne køre | DONE
 
-være samlet og lodet 
+være samlet og lodet | DONE
 
-kunne bruge sensorene 
+kunne bruge sensorene | DONE
 
 
 uge 2 - V 
 
 bruge målinger 
 
-stop function 
+stop function | DONE
 
 dreje function 
 

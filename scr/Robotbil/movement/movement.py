@@ -35,14 +35,14 @@ class Make_DCmotor:
         self.speed = speed
 
 
-    def duty_cycle(self, speed):
+    def duty_cycle(self, speed) -> int:
         if self.speed <= 0 or self.speed > 100:
             duty_cyclen = 0
         else:
             duty_cyclen = int(self.min_duty + (self.max_duty - self.min_duty) * ((self.speed - 1) / (100 - 1)))
         return duty_cyclen
 
-    def forward(self,speed):
+    def forward(self,speed:int):
         self.speed = speed
         print(self,"moving forward")
         self.enable_pin.duty_u16(self.duty_cycle(self.speed))
