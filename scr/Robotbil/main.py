@@ -3,7 +3,7 @@ from movement import motor
 
 def main():
     print("running main")
-    #motor.test_movement()
+    motor.test_movement()
     motor.turn_right()
     motor.turn_left()
     #REF_sens.ref_measure(True)
