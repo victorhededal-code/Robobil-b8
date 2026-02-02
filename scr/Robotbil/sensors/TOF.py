@@ -1,12 +1,12 @@
 # målinger
-import time
+from time import ticks_us, sleep_ms 
 from machine import Pin
 
 gy53 = Pin(14, Pin.IN)  # Initialize GY-53 I2C pin
 
 
 def measure(readout=False) -> int:
-
+    """measures the distance with the GY-53 sensor and returns the measurement in CM"""
     while gy53.value():  # Wait for the GY-53 to become ready
         # print("Waiting for GY-53 to become ready...")
         pass
@@ -24,10 +24,5 @@ def measure(readout=False) -> int:
         print("Time elapsed: ", cm, "cm")
 
     return cm
-
-
-while True:
-    measure(True)
-    time.sleep_ms(250)
 
 
