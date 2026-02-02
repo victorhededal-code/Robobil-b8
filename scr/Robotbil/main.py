@@ -1,8 +1,10 @@
-from movement import movement
-from sensors import TOF, REF_sens
+from movement import motor
+#from sensors import *
 
 def main():
     print("running main")
-    movement.test_movement()
-    REF_sens.ref_measure(True)
+    #motor.test_movement()
+    motor.turn_right()
+    motor.turn_left()
+    #REF_sens.ref_measure(True)
 main()

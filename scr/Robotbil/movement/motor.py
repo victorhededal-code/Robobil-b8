@@ -17,6 +17,29 @@ def test_movement():
     motor1.stop()
     motor2.stop()
 
+def turn_right():
+    '''Makes motor turn right'''
+    print("Turn right")
+    motor1 = Make_DCmotor(16, 17, 18)
+    motor2 = Make_DCmotor(20, 19, 21)
+    motor1.backward(50)
+    motor2.forward(50)
+    sleep(2)
+    motor1.stop()
+    motor2.stop()
+
+def turn_left():
+    '''Makes motor turn left'''
+    print("turn left")
+    motor1 = Make_DCmotor(16, 17, 18)
+    motor2 = Make_DCmotor(20, 19, 21)
+    motor1.backward(50)
+    motor2.forward(50)
+    sleep(2)
+    motor1.stop()
+    motor2.stop()
+
+
 class Make_DCmotor:
     """Builds motor class
 
