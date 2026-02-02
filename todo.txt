@@ -16,12 +16,12 @@ bruge målinger
 
 stop function | DONE
 
-dreje function 
+dreje function | DONE
 
 
 uge 3 - J
 
-start tradløs comutikation 
+start trådløs communication
 
 mode skifte 
 
@@ -41,5 +41,5 @@ uge 6 - dag til dag
 
 skriv report 
 
-vis noget mangler 
+hvis noget mangler
 
