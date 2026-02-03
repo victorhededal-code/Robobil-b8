@@ -2,13 +2,13 @@ from machine import Pin, PWM
 from time import sleep, sleep_ms
 
 
-def move_back():
+def move_back(speed:int):
     print("move back")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(20, 19, 21)
-    motor2.backward(52)
-    motor1.forward(50)
-    sleep_ms(100)
+    motor2.backward(speed)
+    motor1.forward(speed - 2)
+
 
 
 def stop_motors():
@@ -19,33 +19,33 @@ def stop_motors():
     motor2.stop()
 
 
-def move_forward():
+def move_forward(speed:int):
     print("move forward")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
-    motor2.forward(52)
-    motor1.backward(50)
-    sleep_ms(100)
+    motor2.forward(speed)
+    motor1.backward(speed - 2)
 
 
-def turn_right():
+
+def turn_right(speed:int):
     '''Makes motor turn right'''
     print("Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(20, 19, 21)
-    motor1.backward(50)
-    motor2.forward(50)
-    sleep_ms(50)
+    motor1.backward(speed / 2)
+    motor2.forward(speed)
 
 
-def turn_left():
+
+def turn_left(speed:int):
     '''Makes motor turn left'''
     print("turn left")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(20, 19, 21)
-    motor2.backward(50)
-    motor1.forward(50)
-    sleep_ms(200)
+    motor2.backward(speed)
+    motor1.forward(speed / 2)
+
 
 
 class Make_DCmotor:

@@ -29,19 +29,58 @@ def measure(readout=False) -> int:
 
 def give_command(cm):
     """gives the command to the robot"""
+    if cm == 1:
+        motor.stop_motors()
 
-    if cm <= 5:
+    while cm < 10:
+        motor.turn_right(75)
+        time.sleep_ms(50)
+        cm = measure()
+
+    while cm <= 20 and cm > 10:
         print(" too close")
-        motor.turn_right()
-        motor.move_forward()
+        motor.turn_right(50)
+        time.sleep_ms(50)
+        motor.move_forward(25)
+        cm = measure()
 
+    while cm > 50:
+        motor.move_forward(50)
+        time.sleep_ms(100)
+        motor.turn_left(50)
+        time.sleep_ms(100)
+        cm = measure()
 
-    elif 10 <= cm:
+    while 30 <= cm:
         print(" too far away")
-        motor.turn_left()
-        motor.move_forward()
+        motor.turn_left(50)
+        time.sleep_ms(50)
+        motor.move_forward(50)
+        cm = measure()
 
+    while cm < 30 and cm > 20:
+        print(" move along the wall")
+        motor.move_forward(100)
+        cm = measure()
+
+    if cm < 10:
+        motor.turn_right(100)
+
+    elif cm <= 20:
+        print(" too close")
+        motor.turn_right(50)
+        motor.move_forward(25)
+
+    elif cm > 50:
+        motor.move_forward(50)
+        time.sleep_ms(100)
+        motor.turn_left(50)
+
+    elif 30 <= cm:
+        print(" too far away")
+        motor.turn_left(50)
+        motor.move_forward(50)
 
     else:
         print(" move along the wall")
-        motor.move_forward()
+        motor.move_forward(100)
