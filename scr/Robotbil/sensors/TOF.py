@@ -33,29 +33,31 @@ def give_command(cm):
         motor.stop_motors()
 
     while cm < 10:
-        motor.turn_right(75)
-        time.sleep_ms(50)
+        motor.turn_right(80)
+        time.sleep_ms(30)
         cm = measure()
 
     while cm <= 20 and cm > 10:
         print(" too close")
-        motor.turn_right(50)
-        time.sleep_ms(50)
-        motor.move_forward(25)
+        motor.turn_right(80)
+        time.sleep_ms(30)
+        motor.move_forward(70)
+        time.sleep_ms(10)
         cm = measure()
 
     while cm > 50:
-        motor.move_forward(50)
-        time.sleep_ms(100)
-        motor.turn_left(50)
+        motor.move_forward(60)
+        time.sleep_ms(15)
+        motor.turn_left(100)
         time.sleep_ms(100)
         cm = measure()
 
     while 30 <= cm:
         print(" too far away")
-        motor.turn_left(50)
-        time.sleep_ms(50)
-        motor.move_forward(50)
+        motor.turn_left(80)
+        time.sleep_ms(30)
+        motor.move_forward(80)
+        time.sleep_ms(10)
         cm = measure()
 
     while cm < 30 and cm > 20:
@@ -63,24 +65,4 @@ def give_command(cm):
         motor.move_forward(100)
         cm = measure()
 
-    if cm < 10:
-        motor.turn_right(100)
 
-    elif cm <= 20:
-        print(" too close")
-        motor.turn_right(50)
-        motor.move_forward(25)
-
-    elif cm > 50:
-        motor.move_forward(50)
-        time.sleep_ms(100)
-        motor.turn_left(50)
-
-    elif 30 <= cm:
-        print(" too far away")
-        motor.turn_left(50)
-        motor.move_forward(50)
-
-    else:
-        print(" move along the wall")
-        motor.move_forward(100)
