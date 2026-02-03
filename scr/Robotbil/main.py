@@ -1,13 +1,14 @@
-from movement import motor
 from sensors import TOF
+from movement import motor
+import time
+
 
 def main():
-    while True:
-        print("running main")
-        #motor.test_movement()
-        #motor.turn_right()
-        #motor.turn_left()
+    for i in range(500):
         cm = TOF.measure()
         TOF.give_command(cm)
+
+    motor.stop_motors()
+
 
 main()

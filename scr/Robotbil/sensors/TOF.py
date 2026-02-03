@@ -32,11 +32,16 @@ def give_command(cm):
 
     if cm <= 5:
         print(" too close")
+        motor.turn_right()
+        motor.move_forward()
 
 
-
-    elif 10 <= cm :
+    elif 10 <= cm:
         print(" too far away")
+        motor.turn_left()
+        motor.move_forward()
 
 
-    else: print(" move along the wall")
+    else:
+        print(" move along the wall")
+        motor.move_forward()
