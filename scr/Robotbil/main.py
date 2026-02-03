@@ -1,10 +1,13 @@
 from movement import motor
-#from sensors import *
+from sensors import TOF
 
 def main():
-    print("running main")
-    motor.test_movement()
-    motor.turn_right()
-    motor.turn_left()
-    #REF_sens.ref_measure(True)
+    while True:
+        print("running main")
+        #motor.test_movement()
+        #motor.turn_right()
+        #motor.turn_left()
+        cm = TOF.measure()
+        TOF.give_command(cm)
+
 main()

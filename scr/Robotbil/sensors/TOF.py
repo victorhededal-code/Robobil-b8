@@ -1,6 +1,7 @@
 # målinger
-from time import ticks_us, sleep_ms 
+import time
 from machine import Pin
+from movement import motor
 
 gy53 = Pin(14, Pin.IN)  # Initialize GY-53 I2C pin
 
@@ -26,3 +27,16 @@ def measure(readout=False) -> int:
     return cm
 
 
+def give_command(cm):
+    """gives the command to the robot"""
+
+    if cm <= 5:
+        print(" too close")
+
+
+
+    elif 10 <= cm :
+        print(" too far away")
+
+
+    else: print(" move along the wall")
