@@ -1,7 +1,7 @@
 # målinger
 import time
 from machine import Pin
-#from movement import motor
+
 
 gy53 = Pin(14, Pin.IN)  # Initialize GY-53 I2C pin
 

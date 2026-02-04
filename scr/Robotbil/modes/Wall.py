@@ -10,6 +10,7 @@ def find_wall():
 def give_command(cm:float) -> None:
     """gives the command to the robot"""
     if cm == 1:
+        print("stop motor pls")
         motor.stop_motors()
 
     while 1< cm < 20:
