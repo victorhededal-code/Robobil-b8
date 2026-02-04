@@ -1,14 +1,15 @@
-from sensors import TOF
 from movement import motor
-import time
-
+from sensors import TOF
+from time import sleep, sleep_ms
+from modes import Wall
 
 def main():
-    for i in range(500):
-        cm = TOF.measure()
-        TOF.give_command(cm)
-
-    motor.stop_motors()
+    while True:
+        print("running main")
+        #motor.test_movement()
+        #motor.turn_right()
+        #motor.turn_left()
+        Wall.find_wall()
 
 
 main()
