@@ -1,4 +1,19 @@
-readme robotbil 
+# Components used to for the build
+## Main electrical components
+2 x 6v DC motors
+1 x GY-53 Time of flight sensor
+1 x QRE1113 (analog) IR reflection sensor
+1 x Raspberry pico W 
+1 x L298 H-bridge
+1 x battery 7,4V 
+
+## Other misc components
+Wires
+ways to fasten everything
+wheels
+swich for turning on and off 
+
+# Diagrams for the project
 
 ## WBS Diagram 
 ![alt txt](pics/WBSroboboilos.jpg)
