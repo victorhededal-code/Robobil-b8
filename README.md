@@ -6,6 +6,7 @@
 1 x Raspberry pico W <br>
 1 x L298 H-bridge <br>
 1 x battery 7,4V <br>
+1 x breakout board for RP pico
 
 ## Other misc components
 Wires <br>
