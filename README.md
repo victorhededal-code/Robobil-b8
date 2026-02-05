@@ -10,3 +10,8 @@ readme robotbil
 ## Module Structure 
 ![alt txt](pics/modulestructure.jpg)
 
+## Wire diagram
+![alt txt](diagrams/wire diagram.jpg)
+
+## Block diagram
+![alt txt](Blockdiragram.jpg)
