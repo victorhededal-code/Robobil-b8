@@ -8,5 +8,5 @@ readme robotbil
 ![alt txt](netflowrobobil.jpg)
 
 ## Module Structure 
-![alt txt](module_structure.jpg)
+![alt txt](modulestructure.jpg)
 
