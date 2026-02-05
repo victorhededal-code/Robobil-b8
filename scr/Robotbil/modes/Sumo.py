@@ -7,13 +7,12 @@ def find_box():
           "##       Sumo at the moment WILL overheat REF sensor     ##\n"
           "#############################################################")
     while True:
-        count=0
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
         print("edge =", edge)
-        give_command(cm,edge,count)
+        give_command(cm,edge)
 
-def give_command(cm:float,edge:int,count:int) -> None:
+def give_command(cm:float,edge:int) -> None:
     """gives the command to the robot"""
     """tankegang:
     bil drejer i cirkel indtil den finder en box,
@@ -22,33 +21,27 @@ def give_command(cm:float,edge:int,count:int) -> None:
     inden den søger igen vil bilen dreje 45 grader (dvs, x antal millisekunder)for at undgå at konstant køre ind i den samme kasse"""
 
 
-    if edge == 0:
+    if edge == 1: #this is what causes REF to overheat
         print("stop motor pls")
         motor.stop_motors()
-        #go_back(count) does not work yet
+        go_back()
 
-    while  cm < 60 and edge==1:
-        print("box found, ramming")
-        count+=1
-        #motor.move_forward(100)
+    while  cm < 60 and edge==0:
+        motor.move_forward(100)
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
-    while cm > 60 and edge==1:
+    while cm > 60 and edge==0:
         print("No box, searching...")
-        # motor.turn_left(100)
+        motor.turn_left(100)
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
-def go_back(count:int) -> None: #we go back same distance we went forward, then we stop and turn
-    for i in range(count):
-        print("back")
-        #motor.move_back(100)
-    print("went back a total of",count,"times")
-    count=0
-    #motor.turn_left(100)
+def go_back() -> None: #we go back, then we stop and turn
+    print("back")
+    motor.move_back(100)
+    time.sleep_ms(60)
+    motor.turn_left(100)
     time.sleep_ms(30)
-    cm = TOF.measure()
-    edge=REF_sens.ref_measure()
-    give_command(cm,edge,count)
+    return
 
 
 
