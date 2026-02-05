@@ -12,7 +12,7 @@
 Wires <br>
 Ways to fasten everything <br> 
 Wheels <br> 
-Swich for turning on and off <br>  
+Swich for turning on and off <br>
 Base for the car
 
 # Diagrams for the project
