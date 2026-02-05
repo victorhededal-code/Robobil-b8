@@ -1,6 +1,7 @@
 from movement import motor
 from sensors import TOF, REF_sens
 import time
+
 def find_box():
     input("##############################################################\n"
           "##          pls read IMPORTANT                           ##\n"
@@ -27,19 +28,19 @@ def give_command(cm:float,edge:int) -> None:
         go_back()
 
     while  cm < 60 and edge==0:
-        motor.move_forward(100)
+        #motor.move_forward(100)
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
     while cm > 60 and edge==0:
         print("No box, searching...")
-        motor.turn_left(100)
+        #motor.turn_left(100)
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
 def go_back() -> None: #we go back, then we stop and turn
     print("back")
-    motor.move_back(100)
+    #motor.move_back(100)
     time.sleep_ms(60)
-    motor.turn_left(100)
+    #motor.turn_left(100)
     time.sleep_ms(30)
     return
 

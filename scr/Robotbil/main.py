@@ -2,9 +2,10 @@ from movement import motor
 from sensors import TOF
 from time import sleep, sleep_ms
 from modes import Wall,Sumo
-try:
-    def main():
-        while True:
+
+def main():
+    while True:
+        try:
             print("running main")
             ch=input("press the corresponding number to start said mode:\n"
                      "1) wallfollow\n"
@@ -17,9 +18,12 @@ try:
                 Wall.find_wall()
             if ch == "2":
                 Sumo.find_box()
-    main()
-except KeyboardInterrupt:
-    print("interrupted")
-    motor.stop_motors()
+        except KeyboardInterrupt:
+            print("interrupted")
+            motor.stop_motors()
+
+
+main()
+
 
 
