@@ -1,2 +1,2 @@
 readme robotbil
-(netflowrobobil.jpg)
+![alt txt](netflowrobobil.jpg)
