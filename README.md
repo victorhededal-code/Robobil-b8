@@ -11,7 +11,7 @@ readme robotbil
 ![alt txt](pics/modulestructure.jpg)
 
 ## Wire diagram
-![alt txt](diagrams/wire diagram.jpg)
+![alt txt](diagrams/wirediagram.jpg)
 
 ## Block diagram
-![alt txt](Blockdiragram.jpg)
+![alt txt](diagrams/Blockdiragram.jpg)
