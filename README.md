@@ -14,4 +14,4 @@ readme robotbil
 ![alt txt](diagrams/wirediagram.jpg)
 
 ## Block diagram
-![alt txt](diagrams/Blockdiragram.jpg)
+![alt txt](diagrams/Blockdiragarm.jpg)
