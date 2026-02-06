@@ -26,7 +26,7 @@ link for further changes <br>
 ![alt txt](pics/netflowrobobil.jpg)
 
 ## Module Structure 
-![alt txt](pics/modulestructure.jpg)
+![alt txt](pics/Updated_modul_struct.png)
 
 ## Wire diagram
 ![alt txt](diagrams/wirediagram.jpg)
