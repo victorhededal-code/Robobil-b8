@@ -19,7 +19,7 @@ def measure(readout=False) -> float:
         # print("Waiting for GY-53 to finish reading...")
         pass
     endtime = time.ticks_us()
-    # To get distance in mm, use (endtime - starttime) / 10
+    # To get distance in mm, use (endtime - starttime) / 10 | to get distance in cm, use (endtime - starttime) / 100 
     cm = (endtime - starttime) / 100
     if readout:
         print("Time elapsed: ", cm, "cm")
