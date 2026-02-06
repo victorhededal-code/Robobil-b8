@@ -20,16 +20,14 @@ Base for the car
 ## WBS Diagram 
 ![alt txt](pics/WBSroboboilos.jpg)
 
-## netwærksdiagram
-link for further changes <br> 
-(https://app.diagrams.net/#G1kffs9nXnA0oIWRXcWnfDpMMo_MByG3iB#%7B%22pageId%22%3A%22FtoGaiqjtzoiWv7pfKCB%22%7D) <br>
+## Network Diagram
 ![alt txt](pics/Updated_Network_diagram.png)
 
 ## Modul Structure 
 ![alt txt](pics/Updated_modul_struct.png)
 
-## Wire diagram
+## Wire Diagram
 ![alt txt](diagrams/wirediagram.jpg)
 
-## Block diagram
+## Block Diagram
 ![alt txt](diagrams/Blockdiragarm.jpg)
