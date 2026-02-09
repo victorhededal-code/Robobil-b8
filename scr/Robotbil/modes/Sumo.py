@@ -25,23 +25,26 @@ def give_command(cm:float,edge:int) -> None:
     if edge == 1: #this is what causes REF to overheat
         print("stop motor pls")
         motor.stop_motors()
+        time.sleep_ms(100)
         go_back()
 
-    while  cm < 60 and edge==0:
-        #motor.move_forward(100)
+    while  cm < 40 and edge==0:
+        motor.move_forward(30)
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
+
     while cm > 60 and edge==0:
         print("No box, searching...")
-        #motor.turn_left(100)
+        motor.q_turn_right()
         cm = TOF.measure()
         edge=REF_sens.ref_measure()
+
 def go_back() -> None: #we go back, then we stop and turn
     print("back")
-    #motor.move_back(100)
-    time.sleep_ms(60)
-    #motor.turn_left(100)
-    time.sleep_ms(30)
+    motor.move_back(50) #this does not work, it literally just doesn't do anything right now
+    time.sleep_ms(100)
+    motor.turn_left(50)
+    time.sleep_ms(100)
     return
 
 

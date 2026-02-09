@@ -5,16 +5,16 @@ from time import sleep, sleep_ms
 def move_back(speed:int):
     print("move back")
     motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(20, 19, 21)
+    motor2 = Make_DCmotor(19, 20, 21)
     motor2.backward(speed)
-    motor1.forward(speed - 2)
+    motor1.backward(speed - 6)
 
 
 
 def stop_motors():
     print("stop motors")
     motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(20, 19, 21)
+    motor2 = Make_DCmotor(19, 20, 21)
     motor1.stop()
     motor2.stop()
 
@@ -24,7 +24,7 @@ def move_forward(speed:int):
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor2.forward(speed)
-    motor1.backward(speed - 2)
+    motor1.forward(speed - 2)
 
 
 
@@ -32,8 +32,16 @@ def turn_right(speed:int):
     '''Makes motor turn right'''
     print("Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(20, 19, 21)
-    motor1.backward(speed / 2)
+    motor2 = Make_DCmotor(19, 20, 21)
+    motor1.forward(speed / 2)
+    motor2.forward(speed)
+
+def q_turn_right(speed=50):
+    '''Makes motor turn right'''
+    print("Turn right")
+    motor1 = Make_DCmotor(16, 17, 18)
+    motor2 = Make_DCmotor(19, 20, 21)
+    motor1.backward(speed)
     motor2.forward(speed)
 
 
@@ -42,8 +50,8 @@ def turn_left(speed:int):
     '''Makes motor turn left'''
     print("turn left")
     motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(20, 19, 21)
-    motor2.backward(speed)
+    motor2 = Make_DCmotor(19, 20, 21)
+    motor2.forward(speed)
     motor1.forward(speed / 2)
 
 
