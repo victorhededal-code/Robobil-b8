@@ -1,8 +1,0 @@
-pull = git pull
-
-add = git add .
-
-commit = git commit -m "text om hvad du tilføjer"
-
-push = git push
-
