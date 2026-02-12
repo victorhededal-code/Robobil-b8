@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0" version="29.3.6">
+  <diagram name="Side-1" id="zf85Ql1zf1x39ZpSnFOn">
+    <mxGraphModel dx="914" dy="447" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-18" edge="1" parent="1" source="yla0nON2AnvLVM2Zdbi8-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yla0nON2AnvLVM2Zdbi8-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Fodbold start" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-14" edge="1" parent="1" source="yla0nON2AnvLVM2Zdbi8-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yla0nON2AnvLVM2Zdbi8-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="afvænt input" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-13" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="check input" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-19" edge="1" parent="1" source="yla0nON2AnvLVM2Zdbi8-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yla0nON2AnvLVM2Zdbi8-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="gå på nettet" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-20" edge="1" parent="1" source="yla0nON2AnvLVM2Zdbi8-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yla0nON2AnvLVM2Zdbi8-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="354" y="240" />
+              <mxPoint x="354" y="290" />
+              <mxPoint x="414" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-21" edge="1" parent="1" source="yla0nON2AnvLVM2Zdbi8-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yla0nON2AnvLVM2Zdbi8-16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="240" />
+              <mxPoint x="500" y="90" />
+              <mxPoint x="414" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-17" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="er forbindelsen sikker?" vertex="1">
+          <mxGeometry height="80" width="80" x="374" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Ja" vertex="1">
+          <mxGeometry height="30" width="60" x="320" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="yla0nON2AnvLVM2Zdbi8-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Nej" vertex="1">
+          <mxGeometry height="30" width="60" x="440" y="210" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
