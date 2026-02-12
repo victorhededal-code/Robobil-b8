@@ -85,7 +85,7 @@ class Make_DCmotor:
             duty_cyclen = 0
         else:
             duty_cyclen = int(self.min_duty + (self.max_duty - self.min_duty) * ((self.speed - 1) / (100 - 1)))
-            print(duty_cyclen)
+
         return duty_cyclen
 
     def forward(self, speed: int):

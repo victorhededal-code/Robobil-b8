@@ -12,6 +12,7 @@ def find_box():
         cm = TOF.measure()
         edge = REF_sens.ref_measure()
         print("edge =", edge)
+        print("cm =", cm)
         give_command(cm, edge)
 
 
@@ -26,11 +27,12 @@ def give_command(cm: float, edge: int) -> None:
     if edge == 1:
         go_back()
 
-    elif cm < 40:
+    elif cm < 30:
         push()
 
-    while cm > 40 and edge == 0:
+    while cm > 30 and edge == 0:
         print("No box, searching...")
+        motor.stop_motors()
         motor.q_turn_right()
         cm = TOF.measure()
         edge = REF_sens.ref_measure()
@@ -46,8 +48,9 @@ def go_back() -> None:  # we go back, then we stop and turn
 
 
 def push():
+    motor.stop_motors()
     motor.q_turn_right(100)
-    time.sleep(1)
+    time.sleep_ms(100)
     edge = 0
     while not edge:
         motor.move_forward(50)
