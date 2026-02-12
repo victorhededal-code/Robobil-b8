@@ -2,13 +2,25 @@ from machine import Pin, PWM
 from time import sleep, sleep_ms
 
 
-def move_back(speed:int):
+def test_forward(speed):
+    for i in range(3, 11, 1):
+        print(i)
+        motor1 = Make_DCmotor(16, 17, 18)
+        motor2 = Make_DCmotor(19, 20, 21)
+        motor1.forward(speed)
+        motor2.forward(speed - i)
+        sleep(3)
+        stop_motors()
+        sleep(2)
+    stop_motors()
+
+
+def move_back(speed: int):
     print("move back")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
-    motor2.backward(speed)
-    motor1.backward(speed - 6)
-
+    motor2.backward(speed - 4)
+    motor1.backward(speed)
 
 
 def stop_motors():
@@ -19,16 +31,15 @@ def stop_motors():
     motor2.stop()
 
 
-def move_forward(speed:int):
+def move_forward(speed: int):
     print("move forward")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
-    motor2.forward(speed)
-    motor1.forward(speed - 2)
+    motor2.forward(speed - 4)
+    motor1.forward(speed)
 
 
-
-def turn_right(speed:int):
+def turn_right(speed: int):
     '''Makes motor turn right'''
     print("Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
@@ -36,24 +47,23 @@ def turn_right(speed:int):
     motor1.forward(speed / 2)
     motor2.forward(speed)
 
+
 def q_turn_right(speed=50):
     '''Makes motor turn right'''
-    print("Turn right")
+    print("Quick Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor1.backward(speed)
-    motor2.forward(speed)
+    motor2.forward(speed - 4)
 
 
-
-def turn_left(speed:int):
+def turn_left(speed: int):
     '''Makes motor turn left'''
     print("turn left")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor2.forward(speed)
     motor1.forward(speed / 2)
-
 
 
 class Make_DCmotor:
@@ -75,6 +85,7 @@ class Make_DCmotor:
             duty_cyclen = 0
         else:
             duty_cyclen = int(self.min_duty + (self.max_duty - self.min_duty) * ((self.speed - 1) / (100 - 1)))
+            print(duty_cyclen)
         return duty_cyclen
 
     def forward(self, speed: int):
