@@ -12,7 +12,7 @@ kunne bruge sensorene | DONE
 
 uge 2 - V 
 
-bruge målinger
+bruge målinger | DONE
 
 stop function | DONE
 
