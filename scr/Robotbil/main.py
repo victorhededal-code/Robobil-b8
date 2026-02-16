@@ -20,6 +20,8 @@ def main():
                 Sumo.find_box()
             if ch == "3":
                 motor.test_forward(100)
+            if ch == "4":
+                Sumo.dummy()
         except KeyboardInterrupt:
             print("interrupted")
             motor.stop_motors()

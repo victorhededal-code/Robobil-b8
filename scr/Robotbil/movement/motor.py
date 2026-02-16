@@ -65,6 +65,13 @@ def turn_left(speed: int):
     motor2.forward(speed)
     motor1.forward(speed / 2)
 
+def q_turn_left(speed=50):
+    '''Makes motor turn right'''
+    print("Quick Turn right")
+    motor1 = Make_DCmotor(16, 17, 18)
+    motor2 = Make_DCmotor(19, 20, 21)
+    motor1.forward(speed)
+    motor2.backward(speed - 4)
 
 class Make_DCmotor:
     """Builds motor class
