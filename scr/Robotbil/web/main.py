@@ -4,8 +4,12 @@ from network import WLAN
 from modes import Sumo, Wall
 import socket
 
+Wall = False
+
+Sumo = False
 
 def UDP_Listen():
+    global Wall, Sumo
     # Setup socket
     soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet protocol, UDP
     soc.bind(("0.0.0.0", 12345)) # Bind the socket to the machines own IP, and port 12345
