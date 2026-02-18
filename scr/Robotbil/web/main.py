@@ -3,7 +3,7 @@ from movement import motor
 from network import WLAN
 from modes import Sumo, Wall
 import socket
-
+#test
 wall = False
 
 sumo = False
