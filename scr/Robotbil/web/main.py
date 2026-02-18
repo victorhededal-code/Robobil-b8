@@ -53,12 +53,12 @@ def UDP_Listen():
                 motor.stop_motors()
 
             else:
-                if wall==True:
+                if wall == True:
                     if data == "4":
                         wall = False
                     else:
                         Wall.find_wall()
-                if sumo==True:
+                if sumo == True:
                     if data == "4":
                         sumo = False
                     else:

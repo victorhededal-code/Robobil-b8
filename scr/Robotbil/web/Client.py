@@ -63,6 +63,13 @@ try:
             # Handle command
             soc.sendto(data, addr)
 
+        while keyboard.is_pressed('4'):
+            data = "4"
+            data = data.encode("ascii")
+
+            # Handle command
+            soc.sendto(data, addr)
+
 except Exception as e:
     # while the program is interrupted, we need to close the port
     soc.close()
