@@ -1,22 +1,20 @@
-# /main.py
+# /udp_main.py
 from movement import motor
 from network import WLAN
 from modes import Sumo, Wall
 import socket
 
-count = 0
 wall = False
+
 sumo = False
 
+count = 0
 
 def UDP_Listen():
-    global count, wall, sumo
+    global wall, sumo,count
     # Setup socket
-    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
-
-    soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
-
-    print("Listening for UDP on 10.110.0.39:12345")
+    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet protocol, UDP
+    soc.bind(("0.0.0.0", 12345)) # Bind the socket to the machines own IP, and port 12345
 
     # Indicate program is ready
 
@@ -30,6 +28,8 @@ def UDP_Listen():
 
             print("Received from", addr, ":", data)
 
+
+
             # Handle command
             if data == 'w':
                 motor.move_forward(80)
@@ -38,7 +38,7 @@ def UDP_Listen():
             elif data == 'd':
                 motor.q_turn_right(80)
             elif data == 'a':
-                motor.q_turn_left(50)
+                motor.q_turn_left(80)
             elif data == 'wd':
                 motor.turn_right(80)
             elif data == 'wa':
@@ -51,27 +51,25 @@ def UDP_Listen():
                 Wall.find_wall()
             elif data == '3':
                 motor.stop_motors()
+
             else:
                 if wall == True:
                     if data == "4":
                         wall = False
+                        motor.stop_motors()
                     else:
                         Wall.find_wall()
                 if sumo == True:
                     if data == "4":
                         sumo = False
+                        motor.stop_motors()
                     else:
                         count = Sumo.find_box(count)
-                print(30 * "\n")
+                print(30*"\n")
                 print("Waiting for data")
 
 
     except Exception as e:
         # If the program is interrupted, we need to close the port
         soc.close()
-        raise e  # Re-raise the error, so the program exits properly
-
-
-
-
-
+        raise e # Re-raise the error, so the program exits properly

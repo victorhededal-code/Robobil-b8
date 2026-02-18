@@ -2,7 +2,7 @@ from movement import motor
 from sensors import TOF
 from time import sleep, sleep_ms
 from modes import Wall,Sumo
-from web import main as web
+from web import udp_main as web
 
 def main():
     while True:
