@@ -4,12 +4,14 @@ from network import WLAN
 from modes import Sumo, Wall
 import socket
 
-Wall = False
+wall = False
 
-Sumo = False
+sumo = False
+
+count = 0
 
 def UDP_Listen():
-    global Wall, Sumo
+    global wall, sumo,count
     # Setup socket
     soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet protocol, UDP
     soc.bind(("0.0.0.0", 12345)) # Bind the socket to the machines own IP, and port 12345
@@ -44,13 +46,23 @@ def UDP_Listen():
             elif data == 'wa':
                 motor.turn_left()
             elif data == '2':
-                Sumo.find_box()
+                sumo = True
             elif data == '1':
-                Wall.find_wall()
+                wall = True
             elif data == '3':
                 motor.stop_motors()
 
             else:
+                if wall==True:
+                    if data == "4":
+                        wall = False
+                    else:
+                        Wall.find_wall()
+                if sumo==True:
+                    if data == "4":
+                        sumo = False
+                    else:
+                        count = Sumo.find_box(count)
                 print(30*"\n")
                 print("Waiting for data")
 
