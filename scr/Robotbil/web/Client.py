@@ -2,10 +2,9 @@ import keyboard
 import socket
 
 # Setup socket
-soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet protocol, UDP
-soc.bind(("0.0.0.0", 12345)) # Bind the socket to the machines own IP, and port 12345
+soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
+soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
 addr = "10.110.0.39", 12345
-
 
 try:
     while True:
@@ -66,7 +65,6 @@ try:
         while keyboard.is_pressed('4'):
             data = "4"
             data = data.encode("ascii")
-
             # Handle command
             soc.sendto(data, addr)
 

@@ -4,17 +4,19 @@ from network import WLAN
 from modes import Sumo, Wall
 import socket
 
-Wall = False
+count = 0
+wall = False
+sumo = False
 
-Sumo = False
 
 def UDP_Listen():
-    global Wall, Sumo
+    global count, wall, sumo
     # Setup socket
-    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet protocol, UDP
-    soc.bind(("0.0.0.0", 12345)) # Bind the socket to the machines own IP, and port 12345
+    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
 
-    print(f'Listening for UDP on {WLAN.ipconfig('addr4')[0]}:12345')
+    soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
+
+    print("Listening for UDP on 10.110.0.39:12345")
 
     # Indicate program is ready
 
@@ -28,34 +30,48 @@ def UDP_Listen():
 
             print("Received from", addr, ":", data)
 
-
-
             # Handle command
             if data == 'w':
-                motor.move_forward()
+                motor.move_forward(80)
             elif data == 's':
-                motor.move_back()
+                motor.move_back(80)
             elif data == 'd':
-                motor.qturn_right()
+                motor.q_turn_right(80)
             elif data == 'a':
-                motor.qturn_left()
+                motor.q_turn_left(50)
             elif data == 'wd':
-                motor.turn_right()
+                motor.turn_right(80)
             elif data == 'wa':
-                motor.turn_left()
+                motor.turn_left(80)
             elif data == '2':
+                sumo = True
                 Sumo.find_box()
             elif data == '1':
+                wall = True
                 Wall.find_wall()
             elif data == '3':
                 motor.stop_motors()
-
             else:
-                print(30*"\n")
+                if wall == True:
+                    if data == "4":
+                        wall = False
+                    else:
+                        Wall.find_wall()
+                if sumo == True:
+                    if data == "4":
+                        sumo = False
+                    else:
+                        count = Sumo.find_box(count)
+                print(30 * "\n")
                 print("Waiting for data")
 
 
     except Exception as e:
         # If the program is interrupted, we need to close the port
         soc.close()
-        raise e # Re-raise the error, so the program exits properly
+        raise e  # Re-raise the error, so the program exits properly
+
+
+
+
+
