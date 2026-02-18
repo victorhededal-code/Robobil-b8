@@ -35,7 +35,7 @@ def give_command(cm: float, edge: int,count:int) -> None:
         push(count)
 
 
-    while cm > 30 and edge == 0:
+    elif cm > 30 and edge == 0:
         print("No box, searching...")
         motor.stop_motors()
         motor.q_turn_left(40)
