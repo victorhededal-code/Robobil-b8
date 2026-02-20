@@ -41,9 +41,9 @@ def right_irq_counter( hall_right ):
 ##############################################################
 def calc_speed():
     global left_counter, right_counter
-    left_rpm = (left_counter * 10) * 60
+    left_rpm = (left_counter * 5) * 60
     left_counter = 0
-    right_rpm = (right_counter * 10) * 60
+    right_rpm = (right_counter * 5) * 60
     right_counter = 0 
 
     left_speed = left_rpm * pi * 6 / 100 / 60 # left wheels speed in mps 
