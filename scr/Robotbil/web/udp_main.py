@@ -8,8 +8,6 @@ wall = False
 
 sumo = False
 
-count = 0
-
 def UDP_Listen():
     global wall, sumo,count
     # Setup socket
@@ -64,7 +62,7 @@ def UDP_Listen():
                         sumo = False
                         motor.stop_motors()
                     else:
-                        count = Sumo.find_box(count)
+                       Sumo.find_box()
                 print(30*"\n")
                 print("Waiting for data")
 
