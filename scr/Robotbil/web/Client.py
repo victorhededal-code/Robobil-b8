@@ -8,67 +8,78 @@ addr = "10.110.0.39", 12345
 
 try:
     while True:
-        while keyboard.is_pressed('w'):
+        if keyboard.is_pressed('w'):
             data = "w"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('a'):
+        elif keyboard.is_pressed('a'):
             data = "a"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('s'):
+        elif keyboard.is_pressed('s'):
             data = "s"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('d'):
+        elif keyboard.is_pressed('d'):
             data = "d"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('w') and keyboard.is_pressed('a'):
+        elif keyboard.is_pressed('w') and keyboard.is_pressed('a'):
             data = "wa"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('w') and keyboard.is_pressed('d'):
+        elif keyboard.is_pressed('w') and keyboard.is_pressed('d'):
             data = "wd"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('1'):
+        elif keyboard.is_pressed('1'):
             data = "1"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('2'):
+        elif keyboard.is_pressed('2'):
             data = "2"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('3'):
+        elif keyboard.is_pressed('3'):
             data = "3"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        while keyboard.is_pressed('4'):
+        elif keyboard.is_pressed('4'):
             data = "4"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
+        elif keyboard.is_pressed('5'):
+            data = "5"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+        else:
+            data = "Nothing"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+        data=None
 
 except Exception as e:
-    # while the program is interrupted, we need to close the port
+    # if the program is interrupted, we need to close the port
     soc.close()
     raise e  # Re-raise the error, so the program exits properly

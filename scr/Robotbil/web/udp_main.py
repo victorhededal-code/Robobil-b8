@@ -8,25 +8,25 @@ wall = False
 
 sumo = False
 
+
 def UDP_Listen():
-    global wall, sumo,count
+    global wall, sumo, count
     # Setup socket
-    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet protocol, UDP
-    soc.bind(("0.0.0.0", 12345)) # Bind the socket to the machines own IP, and port 12345
+    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
+    soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
 
     # Indicate program is ready
 
     try:
         while True:
             # Wait for a command
+
             data, addr = soc.recvfrom(1024)
 
             # Convert data from bytes to string
             data = data.decode('ascii').strip('\n').lower()
 
             print("Received from", addr, ":", data)
-
-
 
             # Handle command
             if data == 'w':
@@ -49,6 +49,8 @@ def UDP_Listen():
                 Wall.find_wall()
             elif data == '3':
                 motor.stop_motors()
+            elif data == '5':
+                Sumo.dummy()
 
             else:
                 if wall == True:
@@ -62,12 +64,12 @@ def UDP_Listen():
                         sumo = False
                         motor.stop_motors()
                     else:
-                       Sumo.find_box()
-                print(30*"\n")
-                print("Waiting for data")
+                        Sumo.find_box()
+            print(30 * "\n")
+            print("Waiting for data")
 
 
     except Exception as e:
         # If the program is interrupted, we need to close the port
         soc.close()
-        raise e # Re-raise the error, so the program exits properly
+        raise e  # Re-raise the error, so the program exits properly
