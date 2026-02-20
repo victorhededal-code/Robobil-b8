@@ -46,11 +46,11 @@ def calc_speed():
     right_rpm = (right_counter * 10) * 60
     right_counter = 0 
 
-    left_speed = left_rpm * pi * 6 / 100 / 60 # left wheels speed in mps 
-    right_speed = right_rpm * pi * 6 / 100 / 60 # right wheels speed in mps 
+    left_speed = left_rpm * pi * 6.5 / 100 / 60 # left wheels speed in mps
+    right_speed = right_rpm * pi * 6.5 / 100 / 60 # right wheels speed in mps
     
     speed = (right_speed + left_speed) / 2 # speed in mps 
-    return speed 
+    return speed
 
  #############################################################
  # timer for interupts 

@@ -16,7 +16,7 @@ def test_forward(speed):
 
 
 def move_back(speed: int):
-    print("move back")
+    #print("move back")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor2.backward(speed - 4)
@@ -24,7 +24,7 @@ def move_back(speed: int):
 
 
 def stop_motors():
-    print("stop motors")
+    #print("stop motors")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor1.stop()
@@ -32,7 +32,7 @@ def stop_motors():
 
 
 def move_forward(speed: int):
-    print("move forward")
+    #print("move forward")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor2.forward(speed - 4)
@@ -41,7 +41,7 @@ def move_forward(speed: int):
 
 def turn_right(speed: int):
     '''Makes motor turn right'''
-    print("Turn right")
+    #print("Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor1.forward(speed / 2)
@@ -50,7 +50,7 @@ def turn_right(speed: int):
 
 def q_turn_right(speed=50):
     '''Makes motor turn right'''
-    print("Quick Turn right")
+    #print("Quick Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor1.backward(speed)
@@ -59,7 +59,7 @@ def q_turn_right(speed=50):
 
 def turn_left(speed: int):
     '''Makes motor turn left'''
-    print("turn left")
+    #print("turn left")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor2.forward(speed)
@@ -67,7 +67,7 @@ def turn_left(speed: int):
 
 def q_turn_left(speed=50):
     '''Makes motor turn right'''
-    print("Quick Turn right")
+    #print("Quick Turn right")
     motor1 = Make_DCmotor(16, 17, 18)
     motor2 = Make_DCmotor(19, 20, 21)
     motor1.forward(speed)
