@@ -80,7 +80,7 @@ try:
             soc.sendto(data, addr)
 
         elif keyboard.is_pressed('6'):
-            data = "5"
+            data = "6"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
