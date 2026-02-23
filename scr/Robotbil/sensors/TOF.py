@@ -2,34 +2,25 @@
 import time
 from machine import Pin
 
-
+values = []
 gy53 = Pin(14, Pin.IN)  # Initialize GY-53 I2C pin
+pwm_start = 0
+pwm_stop = 0
 
+def irq_init():
+    gy53.irq(trigger=Pin.IRQ_RISING |Pin.IRQ_FALLING, handler = irq_handler)
+def irq_handler(gy53):
+    global pwm_start, pwm_stop
+    if gy53.value() == 1:
+        pwm_start = time.ticks_us()
+    else:
+        pwm_stop = time.ticks_us()
+        cm = time.ticks_diff(pwm_stop, pwm_start) / 100
+        values.append(cm)
 
-def measure(readout=False,samples=3) -> float:
-    """measures the distance with the GY-53 sensor and returns the measurement in CM"""
-    values = []
-    for i in range(samples):
-        while gy53.value():  # Wait for the GY-53 to become ready
-            # print("Waiting for GY-53 to become ready...")
-            pass
-        while not gy53.value():  # Read the GY-53 data
-            # print("Reading GY-53 data...")
-            pass
-        starttime = time.ticks_us()
-        while gy53.value():  # Wait for the GY-53 to finish reading
-            # print("Waiting for GY-53 to finish reading...")
-            pass
-        endtime = time.ticks_us()
-        # To get distance in mm, use (endtime - starttime) / 10 | to get distance in cm, use (endtime - starttime) / 100
-        cm = (endtime - starttime) / 100
-        if readout:
-            print("Time elapsed: ", cm, "cm")
-        if 0 < cm < 200:
-            values.append(cm)
-
-    if not values:
-        return 999
-
-    return sum(values) / len(values)
-
+def get_distance():
+    global values
+    temp_values = values[-1,-2,-3]
+    temp_values.sort()
+    values = temp_values
+    return temp_values[1]

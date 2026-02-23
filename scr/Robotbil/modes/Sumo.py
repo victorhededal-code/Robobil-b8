@@ -25,7 +25,7 @@ def find_box() -> None:
     edge = REF_sens.ref_measure()
     # print("edge =", edge)
     # print("cm =", cm)
-    give_command(cm, edge)
+    #give_command(cm, edge)
 
 
 def give_command(cm: float, edge: int) -> None:
