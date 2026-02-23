@@ -54,6 +54,7 @@ def irq_handler_sumo(gy53_sumo):
 def get_distance_sumo():
     global values_sumo
     try:
+        print("sending dist")
         temp_values_sumo = values_sumo[:-3]
         temp_values_sumo.sort()
         values_sumo = temp_values_sumo
