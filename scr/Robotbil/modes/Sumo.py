@@ -25,6 +25,7 @@ def find_box() -> None:
         else:
             if push_count >= 1:
                 go_back()
+                push_count -= 1
             else:
                 reset = False
     elif not box:
