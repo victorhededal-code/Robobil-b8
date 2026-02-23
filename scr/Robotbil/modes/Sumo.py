@@ -34,7 +34,7 @@ def find_box() -> None:
             REF_sens.found_box()
             reset = True
         else:
-            find_box()
+            turn()
 
 
 def push() -> None:
