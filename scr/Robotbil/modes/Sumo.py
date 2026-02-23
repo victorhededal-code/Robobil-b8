@@ -4,9 +4,7 @@ import time
 
 push_count = 0
 reset = False
-turning = False
-box = False
-turn_time = 1000 #ms
+
 
 def dummy():
     motor.q_turn_left(50)
@@ -15,7 +13,7 @@ def dummy():
 
 
 def find_box() -> None:
-    global box
+    global box,reset, push_count
     ###########################################################
     ##          pls read IMPORTANT                           ##
     ##       Sumo at the moment is not very precise          ##
@@ -23,35 +21,31 @@ def find_box() -> None:
     box= REF_sens.check_box()
     if reset:
         if box:
-            if turning:
-                turn()
+            push()
+        else:
+            if push_count >= 1:
+                go_back()
             else:
-                push()
-    if not box:
-        cm = TOF.get_distance()
+                reset = False
+    elif not box:
+        cm = TOF.get_distance_sumo()
         if 10<cm<70:
             REF_sens.found_box()
+            reset = True
         else:
-            turn()
+            find_box()
 
 
 def push() -> None:
     global push_count
     motor.move_back(50)
     push_count += 1
+
 def turn() -> None:
-    global turn_time
     motor.q_turn_right(50)
-    turn_time -= 10
-    if not turn_time:
-        turn_time=1000 #reset turn time
-        turning = False #stop turning
 
 def go_back() -> None:
-    if push_count >= 1:
-        motor.forward(50)
-        push_count -= 1
-    else:
+    motor.forward(50)
 
 
 
