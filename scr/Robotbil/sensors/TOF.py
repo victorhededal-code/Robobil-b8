@@ -26,6 +26,11 @@ def get_distance_wall():
     temp_values_wall.sort()
     values_wall = temp_values_wall
     return temp_values_wall[1]
+
+def reset_wall():
+    global values_wall,temp_values_wall
+    temp_values_wall = []
+    values_wall = []
 ####################################
 ###             Sumo             ###
 ####################################
@@ -48,10 +53,13 @@ def irq_handler_sumo(gy53_sumo):
 
 def get_distance_sumo():
     global values_sumo
-    temp_values_sumo = values_sumo[:-3]
-    temp_values_sumo.sort()
-    values_sumo = temp_values_sumo
-    return temp_values_sumo[1]
+    try:
+        temp_values_sumo = values_sumo[:-3]
+        temp_values_sumo.sort()
+        values_sumo = temp_values_sumo
+        return temp_values_sumo[1]
+    except IndexError:
+        return False
 
 def reset_sumo():
     global values_sumo,temp_values_sumo

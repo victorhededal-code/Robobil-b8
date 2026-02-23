@@ -30,11 +30,14 @@ def find_box() -> None:
                 reset = False
     elif not box:
         cm = TOF.get_distance_sumo()
-        if 10<cm<70:
+        if cm<70:
             REF_sens.found_box()
             reset = True
         else:
-            turn()
+            if not cm:
+                pass
+            else:
+                turn()
 
 
 def push() -> None:

@@ -8,7 +8,7 @@ addr = "10.110.0.39", 12345
 
 try:
     while True:
-
+        data = None
         if keyboard.is_pressed('w') and keyboard.is_pressed('a'):
             data = "wa"
             data = data.encode("ascii")
@@ -85,8 +85,6 @@ try:
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
-
-        data=None
 
 except Exception as e:
     # if the program is interrupted, we need to close the port
