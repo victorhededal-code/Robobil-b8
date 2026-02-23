@@ -1,12 +1,14 @@
 # /udp_main.py
 from movement import motor
 from network import WLAN
-from modes import Sumo, Wall
+from modes import Sumo, Wall, Fodbold
 import socket
 
 wall = False
 
 sumo = False
+
+fodbold = False
 
 
 def UDP_Listen():
@@ -29,27 +31,18 @@ def UDP_Listen():
             print("Received from", addr, ":", data)
 
             # Handle command
-            if data == 'w':
-                motor.move_forward(80)
-            elif data == 's':
-                motor.move_back(80)
-            elif data == 'd':
-                motor.q_turn_right(80)
-            elif data == 'a':
-                motor.q_turn_left(80)
-            elif data == 'wd':
-                motor.turn_right(80)
-            elif data == 'wa':
-                motor.turn_left(80)
+            if data == '1':
+                fodbold = True
+                Fodbold.control(data)
             elif data == '2':
-                sumo = True
-                Sumo.find_box()
-            elif data == '1':
                 wall = True
                 Wall.find_wall()
             elif data == '3':
-                motor.stop_motors()
+                sumo = True
+                Sumo.find_box()
             elif data == '5':
+                motor.stop_motors()
+            elif data == '6':
                 Sumo.dummy()
 
             else:
@@ -65,6 +58,14 @@ def UDP_Listen():
                         motor.stop_motors()
                     else:
                         Sumo.find_box()
+
+                if fodbold == True:
+                    if data == "4":
+                        fodbold = False
+                        motor.stop_motors()
+                    else:
+                        Fodbold.control()
+
             print(30 * "\n")
             print("Waiting for data")
 

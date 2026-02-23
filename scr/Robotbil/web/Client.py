@@ -72,6 +72,18 @@ try:
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('space'):
+            data = "space"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('6'):
+            data = "5"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
         else:
             data = "Nothing"
             data = data.encode("ascii")

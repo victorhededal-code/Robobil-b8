@@ -2,30 +2,25 @@ from movement import motor
 from sensors import TOF, REF_sens
 import time
 
+
 count = 0
 box = False
 
-
 def dummy():
-    motor.q_turn_left(50)
-    time.sleep_ms(175)
-    motor.stop_motors()
-
+    push()
+    return count
 
 def find_box() -> None:
-    global box
-    ###########################################################
-    ##          pls read IMPORTANT                           ##
-    ##       Sumo at the moment is not very precise          ##
-    ###########################################################
-    if not box:
-        cm = TOF.measure()
-    if box:
-        cm = 200
+###########################################################
+##          pls read IMPORTANT                           ##
+##       Sumo at the moment WILL overheat REF sensor     ##
+###########################################################
+    cm = TOF.measure()
     edge = REF_sens.ref_measure()
-    # print("edge =", edge)
-    # print("cm =", cm)
+    print("edge =", edge)
+    print("cm =", cm)
     #give_command(cm, edge)
+
 
 
 def give_command(cm: float, edge: int) -> None:
@@ -36,23 +31,20 @@ def give_command(cm: float, edge: int) -> None:
     når bilen når kanten vil den stoppe og gå tilbage i ligeså lang tid som den kørte frem (return to middle)
     inden den søger igen vil bilen dreje 45 grader (dvs, x antal millisekunder)for at undgå at konstant køre ind i den samme kasse"""
     global box
-    print(cm)
-    """
     if edge == 1:
         go_back()
     elif box == True:
-
         push()
-    elif cm > 10 and cm < 70 and box == False:
-        print("Found box at ",cm)
-        box = True
+    elif cm < 30:
         motor.stop_motors()
-        time.sleep_ms(500)
+        time.sleep_ms(300)
+        motor.stop_motors()
         motor.q_turn_left(50)
-        time.sleep_ms(1110)
+        time.sleep_ms(1600)
+        push()
 
 
-    else:
+    elif cm > 30 and edge == 0:
         print("No box, searching...")
         motor.stop_motors()
         motor.q_turn_left(40)
@@ -61,16 +53,11 @@ def give_command(cm: float, edge: int) -> None:
 
 def go_back() -> None:  # we go back, then we stop and turn
     global count, box
-    print("GB " + str(count))
-    if count == 0 and box == False:
-        motor.move_forward(50)
-        time.sleep(1)
-
     for x in range(count):
-        motor.move_forward(50)
+        motor.move_forward(30)
         time.sleep_ms(20)
         motor.stop_motors()
-
+        print(count)
     motor.q_turn_right(50)
     time.sleep_ms(400)
     count = 0
@@ -80,11 +67,19 @@ def go_back() -> None:  # we go back, then we stop and turn
 
 
 def push():
-    global count
-    motor.move_back(50)
-    count += 1
-    print("pushing ",count)
+    global count, box
+    box = True
+
+
+    edge = 0
+    while not edge:
+        motor.move_back(50)
+        time.sleep_ms(20)
+        motor.stop_motors()
+        edge = REF_sens.ref_measure()
+        count += 1
+        print("push_close",count)
 
 
 
-"""
+
