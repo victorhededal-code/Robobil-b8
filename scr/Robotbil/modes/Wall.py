@@ -7,7 +7,7 @@ cm = 0
 
 def find_wall():
     global cm
-    cm = TOF.measure()
+    cm = TOF.get_distance()
     give_command(cm)
 
 

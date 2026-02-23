@@ -1,7 +1,7 @@
 #Importing modules
 import time
 from machine import Pin
-from ..movement import motor
+from movement import motor
 
 # setting the pin for the Reflection sensor 
 REF_sens = Pin(15, Pin.IN)  # Initialize pin
@@ -20,3 +20,6 @@ def check_box():
     global box
     return box
 
+def reset():
+    global box
+    box = False

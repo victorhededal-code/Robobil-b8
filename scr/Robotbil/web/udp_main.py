@@ -12,7 +12,7 @@ fodbold = False
 
 
 def UDP_Listen():
-    global wall, sumo, count
+    global wall, sumo, count, fodbold
     # Setup socket
     soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
     soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
@@ -40,7 +40,7 @@ def UDP_Listen():
             elif data == '3':
                 sumo = True
                 Sumo.find_box()
-            elif data == '5':
+            elif data == 'space':
                 motor.stop_motors()
             elif data == '6':
                 Sumo.dummy()
@@ -64,7 +64,7 @@ def UDP_Listen():
                         fodbold = False
                         motor.stop_motors()
                     else:
-                        Fodbold.control()
+                        Fodbold.control(data)
 
             print(30 * "\n")
             print("Waiting for data")
