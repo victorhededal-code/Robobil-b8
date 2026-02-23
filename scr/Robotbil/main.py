@@ -1,3 +1,5 @@
+from machine import Pin
+
 from movement import motor
 from sensors import TOF
 from time import sleep, sleep_ms
@@ -8,7 +10,9 @@ def main():
     while True:
         try:
             print("running main")
+            TOF.irq_init()
             web.UDP_Listen()
+
             """"
             ch=input("press the corresponding number to start said mode:\n"
                      "1) wallfollow\n"
