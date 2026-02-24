@@ -23,7 +23,6 @@ tim.init(freq=1000, mode=Timer.PERIODIC, callback=tick)
 #########################################################
 # internal init modules
 #########################################################
-udp_main.UDP_init()
 TOF.irq_init_sumo()
 TOF.irq_init_wall()
 REF_sens.irq_init()
@@ -32,7 +31,7 @@ REF_sens.irq_init()
 #########################################################
 # CREATS TASKS
 #########################################################
-TM.create_task("UDP_LISTENER", 50, udp_main.UDP_Listen)
+TM.create_task("UDP_LISTENER", 5, udp_main.UDP_Listen)
 #TM.create_task( CALC_SPEED, 1000, calc_speed )
 #TM.create_task( PRINT_TO_TERMINAL, 1000, print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGoing at {get_speed()} cmps"))
 

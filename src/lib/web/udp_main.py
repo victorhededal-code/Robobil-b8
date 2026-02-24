@@ -5,35 +5,26 @@ from modes import Sumo, Wall, Fodbold
 from sensors import REF_sens, TOF
 import socket
 
-soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
-last_data = None
 wall = False
 
 sumo = False
 
 fodbold = False
 
-def UDP_init():
-    global soc
-    # Setup socket
-    soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
+
 def UDP_Listen():
-    global wall, sumo, fodbold, last_data
-
+    global wall, sumo, fodbold
+    # Internet protocol, UDP
+    soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        # Wait for a command
+        soc.bind(("0.0.0.0", 12345))
         try:
+            # Wait for a command
             data, addr = soc.recvfrom(1024)
-
             # Convert data from bytes to string
             data = data.decode('ascii').strip('\n').lower()
-        except:
-            data = None
-        if last_data:
-            if last_data == data:
-                data = None
-
-        last_data = data
+        except OSError:
+            data = "123"
 
         # Handle command
 
@@ -50,33 +41,38 @@ def UDP_Listen():
             sumo = True
             REF_sens.sumo_init(sumo)
             REF_sens.reset_ref()
-            print("resetting")
             TOF.reset_sumo()
             Sumo.find_box()
         elif data == 'space':
             motor.stop_motors()
 
+        if wall:
+            if data == "4":
+                wall = False
+                motor.stop_motors()
+            else:
+                TOF.reset_sumo()
+                Wall.find_wall()
+        elif sumo:
+            if data == "4":
+                sumo = False
+                REF_sens.sumo_init(sumo)
+                Sumo.find_box(True)
+            else:
+                TOF.reset_wall()
+                Sumo.find_box()
+        elif fodbold:
+            if data == "4":
+                fodbold = False
+                motor.stop_motors()
+            else:
+                TOF.reset_wall()
+                TOF.reset_sumo()
+                Fodbold.control(data)
         else:
-            if wall:
-                if data == "4":
-                    wall = False
-                    motor.stop_motors()
-                else:
-                    Wall.find_wall()
-            elif sumo:
-                if data == "4":
-                    sumo = False
-                    REF_sens.sumo_init(sumo)
-                    Sumo.find_box(True)
-                else:
-                    Sumo.find_box()
-            elif fodbold:
-                if data == "4":
-                    fodbold = False
-                    motor.stop_motors()
-                else:
-                    Fodbold.control(data)
-        data=None
+            TOF.reset_wall()
+            TOF.reset_sumo()
+        soc.close()
 
     except Exception as e:
         # If the program is interrupted, we need to close the port
