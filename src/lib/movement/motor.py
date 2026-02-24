@@ -1,79 +1,53 @@
 from machine import Pin, PWM
-from time import sleep, sleep_ms
-
-
-def test_forward(speed):
-    for i in range(3, 11, 1):
-        print(i)
-        motor1 = Make_DCmotor(16, 17, 18)
-        motor2 = Make_DCmotor(19, 20, 21)
-        motor1.forward(speed)
-        motor2.forward(speed - i)
-        sleep(3)
-        stop_motors()
-        sleep(2)
-    stop_motors()
-
 
 def move_back(speed: int):
-    #print("move back")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor2.backward(speed - 4)
     motor1.backward(speed)
 
 
 def stop_motors():
-    #print("stop motors")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor1.stop()
     motor2.stop()
 
 
 def move_forward(speed: int):
-    #print("move forward")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor2.forward(speed - 4)
     motor1.forward(speed)
 
 
 def turn_right(speed: int):
-    '''Makes motor turn right'''
-    #print("Turn right")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor1.forward(speed / 2)
     motor2.forward(speed)
 
 
 def q_turn_right(speed=50):
-    '''Makes motor turn right'''
-    #print("Quick Turn right")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor1.backward(speed)
     motor2.forward(speed - 4)
 
 
 def turn_left(speed: int):
-    '''Makes motor turn left'''
-    #print("turn left")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor2.forward(speed)
     motor1.forward(speed / 2)
 
 def q_turn_left(speed=50):
-    '''Makes motor turn right'''
-    #print("Quick Turn right")
-    motor1 = Make_DCmotor(16, 17, 18)
-    motor2 = Make_DCmotor(19, 20, 21)
+    motor1 = DCmotor(16, 17, 18)
+    motor2 = DCmotor(19, 20, 21)
     motor1.forward(speed)
     motor2.backward(speed - 4)
 
-class Make_DCmotor:
+class DCmotor:
     """Builds motor class
 
     Params:pin1, pin2, enable_pin

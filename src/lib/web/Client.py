@@ -1,5 +1,6 @@
 import keyboard
 import socket
+from time import sleep
 
 # Setup socket
 soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
@@ -85,6 +86,7 @@ try:
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
+        sleep(0.1)
 
 except Exception as e:
     # if the program is interrupted, we need to close the port

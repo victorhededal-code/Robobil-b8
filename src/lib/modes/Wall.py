@@ -1,6 +1,5 @@
 from movement import motor
 from sensors import TOF
-import time
 
 cm = 0
 

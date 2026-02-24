@@ -1,23 +1,19 @@
 from movement import motor
 from sensors import TOF, REF_sens
-import time
 
 push_count = 0
 reset = False
+startup_time = 250 #ms
 
 
-def dummy():
-    motor.q_turn_left(50)
-    time.sleep_ms(175)
-    motor.stop_motors()
-
-
-def find_box() -> None:
-    global reset, push_count
-    ###########################################################
-    ##          pls read IMPORTANT                           ##
-    ##       Sumo at the moment is not very precise          ##
-    ###########################################################
+def find_box(done=False) -> None:
+    global reset, push_count, startup_time
+    if done:
+        startup_time = 250
+        motor.stop_motors()
+    if startup_time:
+        startup_time -= 50 #ms
+        return
     box= REF_sens.check_box()
     if reset:
         if box:
@@ -49,4 +45,4 @@ def turn() -> None:
     motor.q_turn_right(50)
 
 def go_back() -> None:
-    motor.forward(50)
+    motor.move_forward(50)

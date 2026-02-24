@@ -1,6 +1,4 @@
-# src/boot.py
-from time import sleep, sleep_ms, ticks_ms, ticks_diff
-from machine import Pin
+# lib/boot.py
 from network import WLAN
 import webrepl
 """Sets up webrepl and connects to the wifi"""
