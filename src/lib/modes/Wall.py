@@ -10,9 +10,6 @@ i_val = 0.005
 i_sum = 0 
 
 
-RC_car = motor.Car( 16, 17, 18, 19, 20, 21, l_offset= 4 )
-
-
 def pi_calc( cm ):
     global i_sum, p_val, i_val, target_dist, base_speed 
     error = target_dist - cm  
@@ -45,5 +42,6 @@ def pi_calc( cm ):
 def wall_main():
     global RC_car 
     r_duty, l_duty = pi_calc( TOF.get_distance_wall() )
-    motor.RC_car.move_forward( r_duty, l_duty )
+    motor.RC_car.wall_movement( r_duty, l_duty )
+
 

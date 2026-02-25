@@ -60,6 +60,11 @@ class DCmotor:
         self.pos_pin.on()
         self.neg_pin.on()
 
+    def custome(self,speed)
+        self.enable_pin.duty_u16(speed)
+        self.pos_pin.on()
+        self.neg_pin.off()
+
 
 class Car:
     """Class for Car
@@ -124,6 +129,9 @@ class Car:
         self.h_motor.forward(h_speed - self.h_offset)
         self.v_motor.backward(v_speed - self.v_offset)
 
+    def wall_movement(self, h_duty, v_duty):
+        self.h_motor.custome(h_duty)
+        self.v_motor.custome(v_duty)
 
 RC_car = Car(16, 17, 18, 19, 20, 21, v_offset=3)
 
