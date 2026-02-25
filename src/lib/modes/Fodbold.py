@@ -1,19 +1,32 @@
 from movement import motor
+speed = 80
 
 def control(data):
-
+    global speed
     if data == 'wd':
-        motor.turn_right(80)
+        speed = 80
+        motor.RC_car.turn_right(speed,speed)
     elif data == 'wa':
-        motor.turn_left(80)
+        speed = 80
+        motor.RC_car.turn_left(speed,speed)
     elif data == 'w':
-        motor.move_forward(80)
+        speed = 80
+        motor.RC_car.move_forward(speed,speed)
     elif data == 's':
-        motor.move_back(80)
+        speed = 80
+        motor.RC_car.move_back(30,30 )
     elif data == 'd':
-        motor.q_turn_right(80)
+        speed = 80
+        motor.RC_car.q_turn_right(speed,speed)
     elif data == 'a':
-        motor.q_turn_left(80)
+        speed = 80
+        motor.RC_car.q_turn_left(speed,speed)
     elif data == 'space':
-        motor.stop_motors()
+        motor.RC_car.stop()
+
+    else:
+        if speed < 30:
+            motor.RC_car.stop()
+        else:
+            speed -= 1
 

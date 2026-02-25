@@ -29,12 +29,10 @@ def irq_handler_wall( gy53_wall ):
 def get_distance_wall():
     global wall_list, temp_wall
     cut = len(wall_list)
-    temp_wall = wall_list[:(cut - 3)]
-    wall_list.clear()
+    temp_wall = wall_list[(cut - 3):]
     wall_list = temp_wall
     temp_wall.sort()
     dist = temp_wall[1]
-    temp_wall.clear()
     return dist
 
 
@@ -66,20 +64,21 @@ def irq_handler_sumo( gy53_sumo ):
         pwm_start_sumo = time.ticks_us()
     else:
         pwm_stop_sumo = time.ticks_us()
-        cm = ((pwm_stop_sumo - pwm_start_sumo) / 100)
+        cm = (pwm_stop_sumo - pwm_start_sumo) / 100
         sumo_list.append(cm)
 
 
-def get_distance_sumo():
-    global sumo_list, temp_sumo, sumo_list
+def calc_distance_sumo():
+    global sumo_list, temp_sumo, sumo_list, sumo_dist
     cut = len(sumo_list)
-    temp_sumo = sumo_list[:(cut - 3)]
-    sumo_list.clear()
+    temp_sumo = sumo_list[(cut - 3):]
     sumo_list = temp_sumo
     temp_sumo.sort()
     sumo_dist = temp_sumo[1]
-    temp_sumo.clear()
 
+def get_distance_sumo():
+    global sumo_dist
+    return sumo_dist
 
 
 def reset_sumo():

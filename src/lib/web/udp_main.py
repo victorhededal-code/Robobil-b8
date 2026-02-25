@@ -44,12 +44,12 @@ def UDP_Listen():
             TOF.reset_sumo()
             Sumo.find_box()
         elif data == 'space':
-            motor.stop_motors()
+            motor.RC_car.stop()
 
         if wall:
             if data == "4":
                 wall = False
-                motor.stop_motors()
+                motor.RC_car.stop()
             else:
                 TOF.reset_sumo()
                 Wall.find_wall()
@@ -64,7 +64,7 @@ def UDP_Listen():
         elif fodbold:
             if data == "4":
                 fodbold = False
-                motor.stop_motors()
+                motor.RC_car.stop()
             else:
                 TOF.reset_wall()
                 TOF.reset_sumo()

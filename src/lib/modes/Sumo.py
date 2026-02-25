@@ -3,18 +3,27 @@ from sensors import TOF, REF_sens
 
 push_count = 0
 reset = False
-startup_time = 500 # ms
+startup_time = 1000  # ms
+calc_timer = 0
+new_place_time = 2000
 
 
 def find_box(done=False) -> None:
-    global reset, push_count, startup_time
+    global reset, push_count, startup_time, calc_timer, new_place_time
     if done:
-        startup_time = 500
-        motor.stop_motors()
+        startup_time = 1000
+        motor.RC_car.stop()
     if startup_time:
-        startup_time -= 5 #ms
+        startup_time -= 5  # ms
+
         return
-    box= REF_sens.check_box()
+    if calc_timer <= 0:
+        TOF.calc_distance_sumo()
+        calc_timer = 20
+    else:
+        calc_timer -= 1
+
+    box = REF_sens.check_box()
     if reset:
         if box:
             push()
@@ -25,21 +34,40 @@ def find_box(done=False) -> None:
             else:
                 reset = False
     elif not box:
-        cm = TOF.get_distance_sumo()
-        if cm < 70:
-            REF_sens.found_box()
-            reset = True
+        edge = REF_sens.edge_check()
+        if new_place_time<=0:
+            if not edge:
+                push()
+            else:
+                if push_count / 2 >= 100:
+                    go_back()
+                    push_count -= 1
+                else:
+                    REF_sens.edge_reset()
+                    new_place_time = 2000
+                    push_count = 0
+
+
         else:
-            turn()
+            cm = TOF.get_distance_sumo() #if operation: find new land fucks us over, remove the () from this function
+            if cm < 80:
+                REF_sens.found_box()
+                reset = True
+            else:
+                turn()
+                new_place_time -= 5
+                print(new_place_time)
 
 
 def push() -> None:
     global push_count
-    motor.move_back(50)
+    motor.RC_car.move_back(38, 40)  # Only works on max volt
     push_count += 1
 
+
 def turn() -> None:
-    motor.q_turn_right(30)
+    motor.RC_car.q_turn_right(30, 30)
+
 
 def go_back() -> None:
-    motor.move_forward(50)
+    motor.RC_car.move_forward(30, 30)

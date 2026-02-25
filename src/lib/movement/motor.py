@@ -1,92 +1,97 @@
 from machine import Pin, PWM
 
-def move_back(speed: int):
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor2.backward(speed - 4)
-    motor1.backward(speed)
-
-
-def stop_motors():
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor1.stop()
-    motor2.stop()
-
-
-def move_forward(speed: int):
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor2.forward(speed - 4)
-    motor1.forward(speed)
-
-
-def turn_right(speed: int):
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor1.forward(speed / 2)
-    motor2.forward(speed)
-
-
-def q_turn_right(speed=50):
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor1.backward(speed)
-    motor2.forward(speed - 4)
-
-
-def turn_left(speed: int):
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor2.forward(speed)
-    motor1.forward(speed / 2)
-
-def q_turn_left(speed=50):
-    motor1 = DCmotor(16, 17, 18)
-    motor2 = DCmotor(19, 20, 21)
-    motor1.forward(speed)
-    motor2.backward(speed - 4)
 
 class DCmotor:
     """Builds motor class
 
-    Params:pin1, pin2, enable_pin
+    Params:pos_pin, neg_pin, enable_pin
     """
 
-    def __init__(self, pin1, pin2, enable_pin, max_duty=65636, min_duty=15000, speed=0):
-        self.pin1 = Pin(pin1, Pin.OUT)
-        self.pin2 = Pin(pin2, Pin.OUT)
+    def __init__(self, pos_pin, neg_pin, enable_pin, max_duty=65636, min_duty=15000, speed=0):
+        self.pos_pin = Pin(pos_pin, Pin.OUT)
+        self.neg_pin = Pin(neg_pin, Pin.OUT)
         self.enable_pin = PWM(enable_pin, freq=1000, duty_u16=65535)
         self.max_duty = max_duty
         self.min_duty = min_duty
         self.speed = speed
 
-    def duty_cycle(self, speed) -> int:
+    def duty_cycle(self, speed: int) -> int:
+        self.speed = speed
         if self.speed <= 0 or self.speed > 100:
             duty_cyclen = 0
         else:
-            duty_cyclen = int(self.min_duty + (self.max_duty - self.min_duty) * ((self.speed - 1) / (100 - 1)))
+            duty_cyclen = int(self.min_duty + ((self.max_duty - self.min_duty) * (self.speed / 100)))
+            print(self.min_duty)
+            print( self.max_duty)
+            print(self.speed)
 
+            # duty = min + ((max - min) * (80 / 100))
+            # duty = 15000 + (50000 * 0,8)
+            # 50000 * 0,8 = 40000
+            # duty = 15000 + 40000
+            # duty = 55000
+        #print(duty_cyclen)
         return duty_cyclen
 
     def forward(self, speed: int):
-        self.speed = speed
-        self.enable_pin.duty_u16(self.duty_cycle(self.speed))
-        self.pin1.on()
-        self.pin2.off()
+        self.enable_pin.duty_u16(self.duty_cycle(speed))
+        self.pos_pin.on()
+        self.neg_pin.off()
 
-    def backward(self, speed):
-        self.speed = speed
-        self.enable_pin.duty_u16(self.duty_cycle(self.speed))
-        self.pin1.off()
-        self.pin2.on()
+    def backward(self, speed: int):
+        self.enable_pin.duty_u16(self.duty_cycle(speed))
+        self.pos_pin.off()
+        self.neg_pin.on()
 
     def stop(self):
         self.speed = 0
         self.enable_pin.duty_u16(self.duty_cycle(self.speed))
-        self.pin1.on()
-        self.pin2.on()
+        self.pos_pin.on()
+        self.neg_pin.on()
 
 
+class Car:
+    def __init__(self, h_pos_pin, h_neg_pin, h_enable_pin, v_pos_pin, v_neg_pin, v_enable_pin, h_offset=0, v_offset=0):
+        self.h_pos_pin = Pin(h_pos_pin, Pin.OUT)
+        self.h_neg_pin = Pin(h_neg_pin, Pin.OUT)
+        self.h_enable_pin = PWM(h_enable_pin, freq=1000, duty_u16=65535)
+        self.v_pos_pin = Pin(v_pos_pin, Pin.OUT)
+        self.v_neg_pin = Pin(v_neg_pin, Pin.OUT)
+        self.v_enable_pin = PWM(v_enable_pin, freq=1000, duty_u16=65535)
+        self.h_offset = h_offset
+        self.v_offset = v_offset
 
+        self.h_motor = DCmotor(h_pos_pin, h_neg_pin, h_enable_pin)
+        self.v_motor = DCmotor(v_pos_pin, v_neg_pin, v_enable_pin)
+
+    def move_back(self, h_speed, v_speed):
+        self.h_motor.backward(h_speed - self.h_offset)
+        self.v_motor.backward(v_speed - self.v_offset)
+
+    def stop(self):
+        self.h_motor.stop()
+        self.v_motor.stop()
+
+    def move_forward(self, h_speed, v_speed):
+        self.h_motor.forward((h_speed - self.h_offset))
+        self.v_motor.forward((v_speed - self.v_offset))
+
+    def turn_right(self, h_speed, v_speed):
+        self.h_motor.forward(int((h_speed / 2) - self.h_offset))
+        self.v_motor.forward(v_speed - self.v_offset)
+
+    def q_turn_right(self, h_speed, v_speed):
+        self.h_motor.backward(h_speed - self.h_offset)
+        self.v_motor.forward(v_speed - self.v_offset)
+
+    def turn_left(self, h_speed, v_speed):
+        self.h_motor.forward(h_speed - self.h_offset)
+        self.v_motor.forward(int((v_speed / 2) - self.v_offset))
+
+    def q_turn_left(self, h_speed, v_speed):
+        self.h_motor.forward(h_speed - self.h_offset)
+        self.v_motor.backward(v_speed - self.v_offset)
+
+
+RC_car = Car(16, 17, 18, 19, 20, 21, v_offset=3)
 

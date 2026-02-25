@@ -6,6 +6,7 @@ from movement import motor
 REF_sens = Pin(15, Pin.IN)  # Initialize pin
 box = False
 sumo = False
+edge = False
 
 def irq_init():
     REF_sens.irq(trigger=Pin.IRQ_RISING, handler = irq_handler)
@@ -18,13 +19,21 @@ def sumo_init(state):
         sumo = False
 
 def irq_handler(REF_sens):
-    global box, sumo
+    global box, sumo, edge
     if sumo:
         box = False
-        motor.stop_motors()
+        edge = True
+        motor.RC_car.stop()
     else:
         pass
 
+def edge_check():
+    global edge
+    return edge
+
+def edge_reset():
+    global edge
+    edge = False
 def found_box():
     global box
     box = True
