@@ -2,11 +2,22 @@ from machine import Pin, PWM
 
 
 class DCmotor:
-    """Builds motor class
+    """DC Motor class
+    class made for a dc motor with 2 pins and a pwm pin
 
-    Params:pos_pin, neg_pin, enable_pin
-    """
+    Defaults: 
+        max_duty & min_duty are preset for a raspberry pi pico's arcitecture
+        speed is set to 0 so the motor doesnt start when making the object 
 
+    Attributes:
+        pos_pin: possitive pin for the motor  
+        neg_pin: negetive pin for the motor 
+        enable_pin: pwm enable pin for the motor 
+        max_duty: max duty, depends on arcitecture 
+        min_duty: min_duty, ensures the motor gets the minimum duty needed to spin
+        speed: sets the standart speed
+
+    Methods: forward, backward, stop, custome"""
     def __init__(self, pos_pin, neg_pin, enable_pin, max_duty=65636, min_duty=15000, speed=0):
         self.pos_pin = Pin(pos_pin, Pin.OUT)
         self.neg_pin = Pin(neg_pin, Pin.OUT)
@@ -51,6 +62,27 @@ class DCmotor:
 
 
 class Car:
+    """Class for Car
+    with 2 DCmotors with pwm control 
+
+
+    Defaults:
+        h_offset: can be set if the right motor needs offset
+        v_offset: can be set if the left motor needs offset 
+    
+    Attributes:
+        h_pos_pin: right possitive pin
+        h_neg_pin: right negative pin 
+        v_pos_pin: left possitive pin 
+        v_neg_pin: left negative pin 
+        h_enable_pin: enable pin for right motor
+        v_enable_pin: enable pin for left motor  
+        h_offset: offset for right motor 
+        v_ffset: offset for left motor 
+    
+    Methods: move_forward, move_backward, turn_right, turn_left, q_turn_right, q_turn_left, stop 
+    
+    Warning: When using movement methods you need to have 2 speeds, one for each side """
     def __init__(self, h_pos_pin, h_neg_pin, h_enable_pin, v_pos_pin, v_neg_pin, v_enable_pin, h_offset=0, v_offset=0):
         self.h_pos_pin = Pin(h_pos_pin, Pin.OUT)
         self.h_neg_pin = Pin(h_neg_pin, Pin.OUT)
