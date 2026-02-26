@@ -1,4 +1,5 @@
 from web import udp_main
+from sensors import hall_sens, get_bettery
 
 TM_TIMER_INTERVAL = 1  # ms
 
@@ -50,4 +51,3 @@ def tm_execute_task():
             if (this_task[TASK_CALLBACK]):
                 this_task[TASK_CALLBACK]()
         i += 1
-

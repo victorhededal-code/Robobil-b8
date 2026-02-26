@@ -45,9 +45,6 @@ def UDP_Listen():
             Sumo.find_box()
         elif data == 'space':
             motor.RC_car.stop()
-        elif data == '5':
-            bettery_power, bettery_percentage = get_bettery.bettery_calc()
-            print("battery has ", bettery_power, "V\nThe battery has ", bettery_percentage, "% power")
 
         if wall:
             if data == "space":

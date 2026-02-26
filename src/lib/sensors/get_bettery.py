@@ -23,5 +23,8 @@ check_end = ADC(Pin(28,Pin.IN))
 #############################
 def bettery_calc():
     bettery_power = (check_start.read_u16() + check_end.read_u16()  + check_mid.read_u16() ) * (3.3 / 65535)
+    return bettery_power
+def bettery_calc_procentage():
+    bettery_power = (check_start.read_u16() + check_end.read_u16() + check_mid.read_u16()) * (3.3 / 65535)
     bettery_procentage = (bettery_power / 8.8) * 100
-    return bettery_power, bettery_procentage
+    return bettery_procentage
