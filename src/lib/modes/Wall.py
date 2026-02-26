@@ -3,11 +3,10 @@
 # 2. we are currently always driving into a wall, when close to wall it will try to drive straight, when away from wall  it turns into wall
 # 3. duty is almost always negative, this is big problem, as code is made with intention of duty being positive
 # 4. I am getting very annoyed :D
-
 from movement import motor
 from sensors import TOF
 
-target_dist = 20  # was 40 before
+target_dist = 40  # was 40 before
 base_speed = 40000
 startup_time = 1000
 calc_timer = 0
@@ -39,6 +38,7 @@ def pi_calc(cm):
             i_sum = -5
 
     duty = p + i_sum
+    print("duty:", duty)
     if duty + base_speed >= 65535 / 2:
         r_duty = int(duty - base_speed)
         l_duty = int((duty + base_speed) / 2)

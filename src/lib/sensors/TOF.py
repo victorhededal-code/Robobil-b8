@@ -24,8 +24,9 @@ def irq_handler_wall( gy53_wall ):
     else:
         pwm_stop_wall = time.ticks_us()
         cm = (pwm_stop_wall - pwm_start_wall) // 100
-        if len(wall_list)< 20:
-            wall_list.append(cm)
+        if cm >= 400:
+            cm = 10
+        wall_list.append(cm)
 
 
 def calc_distance_wall():
@@ -38,7 +39,7 @@ def calc_distance_wall():
     wall_list = temp_wall
    # print("\nwall list post overwrite",wall_list)
     temp_wall.sort()
-    wall_dist = temp_wall[3]
+    wall_dist = temp_wall[2]
     #print("\n\nwall dist",temp_wall[1])
 
 def get_distance_wall():
@@ -89,7 +90,7 @@ def calc_distance_sumo():
     sumo_list = temp_sumo
    # print("\nsumo list post overwrite",sumo_list)
     temp_sumo.sort()
-    sumo_dist = temp_sumo[3]
+    sumo_dist = temp_sumo[2]
     #print("\n\nsumo dist",temp_sumo[1])
 
 def get_distance_sumo():
