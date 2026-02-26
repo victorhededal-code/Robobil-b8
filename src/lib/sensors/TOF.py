@@ -78,7 +78,7 @@ def irq_handler_sumo( gy53_sumo ):
         cm = ((pwm_stop_sumo - pwm_start_sumo) // 100)
         if len(sumo_list) < 20:
             sumo_list.append(cm)
-
+5
 
 def calc_distance_sumo():
     global sumo_list, temp_sumo, sumo_list, sumo_dist
@@ -101,4 +101,3 @@ def get_distance_sumo():
 def reset_sumo():
     global sumo_list
     sumo_list = []
-

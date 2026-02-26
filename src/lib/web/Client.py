@@ -9,14 +9,26 @@ addr = "10.110.0.39", 12345
 
 try:
     while True:
-        if keyboard.is_pressed('w') and keyboard.is_pressed('a'):
-            data = "wa"
+        if keyboard.is_pressed('q'):
+            data = "q"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        elif keyboard.is_pressed('w') and keyboard.is_pressed('d'):
-            data = "wd"
+        elif keyboard.is_pressed('e'):
+            data = "e"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('z'):
+            data = "z"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('c'):
+            data = "c"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)

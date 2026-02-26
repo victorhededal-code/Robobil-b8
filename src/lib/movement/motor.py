@@ -10,8 +10,8 @@ class DCmotor:
         speed is set to 0 so the motor doesnt start when making the object 
 
     Attributes:
-        pos_pin: possitive pin for the motor  
-        neg_pin: negetive pin for the motor 
+        pos_pin: positive pin for the motor
+        neg_pin: negative pin for the motor
         enable_pin: pwm enable pin for the motor 
         max_duty: max duty, depends on arcitecture 
         min_duty: min_duty, ensures the motor gets the minimum duty needed to spin
@@ -132,6 +132,15 @@ class Car:
     def wall_movement(self, h_duty, v_duty):
         self.h_motor.custome(h_duty)
         self.v_motor.custome(v_duty)
+
+    def back_turn_right(self, h_speed, v_speed):
+        self.h_motor.backward(int((h_speed / 2) - self.h_offset))
+        self.v_motor.backward(v_speed - self.v_offset)
+
+    def back_turn_left(self, h_speed, v_speed):
+        self.h_motor.backward(h_speed - self.h_offset)
+        self.v_motor.backward(int((v_speed / 2) - self.v_offset))
+
 
 RC_car = Car(16, 17, 18, 19, 20, 21, v_offset=3)
 
