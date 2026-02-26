@@ -34,7 +34,7 @@ def find_box(done=False) -> None:
             else:
                 reset = False
     elif not box:
-        edge = REF_sens.edge_check()
+        edge=REF_sens.edge_check()
         if new_place_time<=0:
             if not edge:
                 push()
@@ -49,19 +49,21 @@ def find_box(done=False) -> None:
 
 
         else:
-            cm = TOF.get_distance_sumo() #if operation: find new land fucks us over, remove the () from this function
+            cm = TOF.get_distance_sumo()
             if cm < 80:
                 REF_sens.found_box()
                 reset = True
             else:
-                turn()
-                new_place_time -= 5
-                print(new_place_time)
+                if calc_timer <= 10:
+                    motor.RC_car.stop()
+                else:
+                    turn()
+                    new_place_time -= 5
 
 
 def push() -> None:
     global push_count
-    motor.RC_car.move_back(38, 40)  # Only works on max volt
+    motor.RC_car.move_back(55, 60)  # Only works on max volt
     push_count += 1
 
 
@@ -70,4 +72,4 @@ def turn() -> None:
 
 
 def go_back() -> None:
-    motor.RC_car.move_forward(30, 30)
+    motor.RC_car.move_forward(45, 45)
