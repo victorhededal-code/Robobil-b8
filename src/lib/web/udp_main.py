@@ -36,7 +36,7 @@ def UDP_Listen():
             REF_sens.sumo_init(False)
             wall = True
             TOF.reset_wall()
-            Wall.find_wall()
+            Wall.wall_main()
         elif data == '3':
             sumo = True
             REF_sens.sumo_init(sumo)
@@ -49,10 +49,11 @@ def UDP_Listen():
         if wall:
             if data == "4":
                 wall = False
+                Wall.wall_main(True)
                 motor.RC_car.stop()
             else:
                 TOF.reset_sumo()
-                Wall.find_wall()
+                Wall.wall_main()
         elif sumo:
             if data == "4":
                 sumo = False

@@ -60,7 +60,7 @@ class DCmotor:
         self.pos_pin.on()
         self.neg_pin.on()
 
-    def custome(self,speed)
+    def custome(self,speed):
         self.enable_pin.duty_u16(speed)
         self.pos_pin.on()
         self.neg_pin.off()

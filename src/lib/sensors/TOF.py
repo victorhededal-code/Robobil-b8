@@ -4,6 +4,7 @@ from machine import Pin
 
 wall_list = []
 temp_wall = []
+wall_dist = 0
 gy53_wall = Pin(14, Pin.IN)  # Initialize GY-53 I2C pin
 pwm_start_wall = 0
 pwm_stop_wall = 0
@@ -22,19 +23,28 @@ def irq_handler_wall( gy53_wall ):
         pwm_start_wall = time.ticks_us()
     else:
         pwm_stop_wall = time.ticks_us()
-        cm = (pwm_stop_wall - pwm_start_wall) / 100
-        wall_list.append(cm)
+        cm = (pwm_stop_wall - pwm_start_wall) // 100
+        if len(wall_list)< 20:
+            wall_list.append(cm)
 
+
+def calc_distance_wall():
+    global wall_list, temp_wall, wall_list, wall_dist
+    #print("\nwall list pre overwrite", wall_list)
+    wall_dist = 0
+    cut = len(wall_list)
+    temp_wall = wall_list[(cut - 5):]
+    #print("\ntemporary list",temp_wall)
+    wall_list = temp_wall
+   # print("\nwall list post overwrite",wall_list)
+    temp_wall.sort()
+    wall_dist = temp_wall[3]
+    #print("\n\nwall dist",temp_wall[1])
 
 def get_distance_wall():
-    global wall_list, temp_wall
-    cut = len(wall_list)
-    temp_wall = wall_list[(cut - 3):]
-    wall_list = temp_wall
-    temp_wall.sort()
-    dist = temp_wall[1]
-    return dist
-
+    global wall_dist
+    print("wall_dist",wall_dist)
+    return wall_dist
 
 def reset_wall():
     global wall_list
@@ -49,7 +59,7 @@ def reset_wall():
 sumo_list = []
 temp_sumo = []
 sumo_dist = 0
-gy53_sumo = Pin(26, Pin.IN)  # Initialize GY-53 I2C pin
+gy53_sumo = Pin(22, Pin.IN)  # Initialize GY-53 I2C pin
 pwm_start_sumo = 0
 pwm_stop_sumo = 0
 
@@ -64,17 +74,23 @@ def irq_handler_sumo( gy53_sumo ):
         pwm_start_sumo = time.ticks_us()
     else:
         pwm_stop_sumo = time.ticks_us()
-        cm = (pwm_stop_sumo - pwm_start_sumo) / 100
-        sumo_list.append(cm)
+        cm = ((pwm_stop_sumo - pwm_start_sumo) // 100)
+        if len(sumo_list) < 20:
+            sumo_list.append(cm)
 
 
 def calc_distance_sumo():
     global sumo_list, temp_sumo, sumo_list, sumo_dist
+    #print("\nsumo list pre overwrite", sumo_list)
+    sumo_dist = 0
     cut = len(sumo_list)
-    temp_sumo = sumo_list[(cut - 3):]
+    temp_sumo = sumo_list[(cut - 5):]
+    #print("\ntemporary list",temp_sumo)
     sumo_list = temp_sumo
+   # print("\nsumo list post overwrite",sumo_list)
     temp_sumo.sort()
-    sumo_dist = temp_sumo[1]
+    sumo_dist = temp_sumo[3]
+    #print("\n\nsumo dist",temp_sumo[1])
 
 def get_distance_sumo():
     global sumo_dist
