@@ -2,7 +2,7 @@
 from movement import motor
 from network import WLAN
 from modes import Sumo, Wall, Fodbold
-from sensors import REF_sens, TOF
+from sensors import REF_sens, TOF, get_bettery
 import socket
 
 wall = False
@@ -45,9 +45,12 @@ def UDP_Listen():
             Sumo.find_box()
         elif data == 'space':
             motor.RC_car.stop()
+        elif data == '5':
+            bettery_power, bettery_percentage = get_bettery.bettery_calc()
+            print("battery has ", bettery_power, "V\nThe battery has ", bettery_percentage, "% power")
 
         if wall:
-            if data == "4":
+            if data == "space":
                 wall = False
                 Wall.wall_main(True)
                 motor.RC_car.stop()
@@ -55,7 +58,7 @@ def UDP_Listen():
                 TOF.reset_sumo()
                 Wall.wall_main()
         elif sumo:
-            if data == "4":
+            if data == "space":
                 sumo = False
                 REF_sens.sumo_init(sumo)
                 Sumo.find_box(True)
@@ -63,7 +66,7 @@ def UDP_Listen():
                 TOF.reset_wall()
                 Sumo.find_box()
         elif fodbold:
-            if data == "4":
+            if data == "space":
                 fodbold = False
                 motor.RC_car.stop()
             else:
