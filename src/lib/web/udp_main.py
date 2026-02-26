@@ -2,7 +2,7 @@
 from movement import motor
 from network import WLAN
 from modes import Sumo, Wall, Fodbold
-from sensors import REF_sens, TOF, get_bettery
+from sensors import REF_sens, TOF, get_bettery, hall_sens
 import socket
 
 wall = False
@@ -45,6 +45,9 @@ def UDP_Listen():
             Sumo.find_box()
         elif data == 'space':
             motor.RC_car.stop()
+        elif data == '5':
+            bettery_power, bettery_percentage = get_bettery.bettery_calc()
+            print("battery has ", bettery_power, "V\nThe battery has ", bettery_percentage, "% power")
 
         if wall:
             if data == "space":
@@ -79,3 +82,9 @@ def UDP_Listen():
         # If the program is interrupted, we need to close the port
         soc.close()
         raise e  # Re-raise the error, so the program exits properly
+
+
+def printing_task():
+    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGoing at {hall_sens.calc_speed()} cmps"
+          f"\n\n\nBattery has {get_bettery.bettery_calc()} V")
+          #f"Battery has {get_bettery.bettery_calc_procentage()}%")

@@ -33,11 +33,9 @@ hall_sens.irq_hall_right_init()
 #########################################################
 # CREATS TASKS
 #########################################################
-TM.create_task("UDP_LISTENER", 5, udp_main.UDP_Listen)
+#TM.create_task("UDP_LISTENER", 5, udp_main.UDP_Listen)
 #TM.create_task( "CALC_SPEED", 1000, hall_sens.CALC_SPEED )
-TM.create_task( "PRINT_TO_TERMINAL", 1000, print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGoing at {hall_sens.calc_speed()} cmps"
-          f"\n\n\nBattery has {get_bettery.bettery_calc()} V\n\n"
-          f"Battery has {get_bettery.bettery_calc_procentage()}%"))
+TM.create_task( "PRINT_TO_TERMINAL", 100, udp_main.printing_task)
 #########################################################
 # EXECUTES TASKS
 #########################################################
