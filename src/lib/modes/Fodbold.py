@@ -4,9 +4,7 @@ speed = 60
 def control(data):
     global speed
 
-    for i in data:
-        if 30 < speed < 80:
-            speed += 1
+
 
     if data == 'e':
         speed = 60

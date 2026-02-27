@@ -1,6 +1,3 @@
-from web import udp_main
-from sensors import hall_sens, get_bettery
-
 TM_TIMER_INTERVAL = 1  # ms
 
 #########################################################

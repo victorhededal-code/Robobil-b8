@@ -1,39 +1,16 @@
 import keyboard
 import socket
 from time import sleep
-
+wall = False
+sumo = False
 # Setup socket
 soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet protocol, UDP
 soc.bind(("0.0.0.0", 12345))  # Bind the socket to the machines own IP, and port 12345
 addr = "10.110.0.39", 12345
-
-try:
-    while True:
-        if keyboard.is_pressed('q'):
-            data = "q"
-            data = data.encode("ascii")
-            # Handle command
-            soc.sendto(data, addr)
-
-        elif keyboard.is_pressed('e'):
-            data = "e"
-            data = data.encode("ascii")
-            # Handle command
-            soc.sendto(data, addr)
-
-        elif keyboard.is_pressed('z'):
-            data = "z"
-            data = data.encode("ascii")
-            # Handle command
-            soc.sendto(data, addr)
-
-        elif keyboard.is_pressed('c'):
-            data = "c"
-            data = data.encode("ascii")
-            # Handle command
-            soc.sendto(data, addr)
-
-        elif keyboard.is_pressed('w'):
+while True:
+    try:
+        data = None
+        if keyboard.is_pressed('w'):
             data = "w"
             data = data.encode("ascii")
             # Handle command
@@ -67,42 +44,59 @@ try:
             data = "2"
             data = data.encode("ascii")
             # Handle command
+            wall = True
             soc.sendto(data, addr)
 
         elif keyboard.is_pressed('3'):
             data = "3"
             data = data.encode("ascii")
             # Handle command
-            soc.sendto(data, addr)
-
-        elif keyboard.is_pressed('4'):
-            data = "4"
-            data = data.encode("ascii")
-            # Handle command
-            soc.sendto(data, addr)
-        elif keyboard.is_pressed('5'):
-            data = "5"
-            data = data.encode("ascii")
-            # Handle command
+            sumo = True
             soc.sendto(data, addr)
 
         elif keyboard.is_pressed('space'):
             data = "space"
+            sumo = False
+            wall = False
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
 
-        elif keyboard.is_pressed('6'):
-            data = "6"
+        elif keyboard.is_pressed('q'):
+            data = "q"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('e'):
+            data = "e"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('z'):
+            data = "z"
+            data = data.encode("ascii")
+            # Handle command
+            soc.sendto(data, addr)
+
+        elif keyboard.is_pressed('c'):
+            data = "c"
             data = data.encode("ascii")
             # Handle command
             soc.sendto(data, addr)
         else:
-            data = "nothing"
-            data = data.encode("ascii")
-            soc.sendto(data, addr)
+            if wall:
+                data = "2"
+                data = data.encode("ascii")
+                soc.sendto(data, addr)
+            if sumo:
+                data = "3"
+                data = data.encode("ascii")
+                soc.sendto(data, addr)
+            sleep(0.1)
 
-except Exception as e:
-    # if the program is interrupted, we need to close the port
-    soc.close()
-    raise e  # Re-raise the error, so the program exits properly
+    except Exception as e:
+        # if the program is interrupted, we need to close the port
+        soc.close()
+        raise e  # Re-raise the error, so the program exits properly

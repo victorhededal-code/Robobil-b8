@@ -1,6 +1,8 @@
 from movement import motor
 from sensors import TOF, REF_sens
 
+from src.lib.movement.motor import RC_car
+
 push_count = 0
 reset = False
 startup_time = 1000  # ms
@@ -15,13 +17,17 @@ def find_box(done=False) -> None:
         motor.RC_car.stop()
     if startup_time:
         startup_time -= 5  # ms
-
         return
+
     if calc_timer <= 0:
         TOF.calc_distance_sumo()
         calc_timer = 20
     else:
         calc_timer -= 1
+    edge = REF_sens.check_edge()
+    if edge:
+        motor.RC_car.stop()
+        REF_sens.edge_reset()
 
     box = REF_sens.check_box()
     if reset:
@@ -34,7 +40,6 @@ def find_box(done=False) -> None:
             else:
                 reset = False
     elif not box:
-        edge=REF_sens.edge_check()
         if new_place_time<=0:
             if not edge:
                 push()
@@ -43,10 +48,8 @@ def find_box(done=False) -> None:
                     go_back()
                     push_count -= 1
                 else:
-                    REF_sens.edge_reset()
                     new_place_time = 2000
                     push_count = 0
-
 
         else:
             cm = TOF.get_distance_sumo()
@@ -63,7 +66,7 @@ def find_box(done=False) -> None:
 
 def push() -> None:
     global push_count
-    motor.RC_car.move_back(55, 60)  # Only works on max volt
+    motor.RC_car.move_back(58, 60)  # Only works on max volt
     push_count += 1
 
 

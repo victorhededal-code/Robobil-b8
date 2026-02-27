@@ -8,11 +8,10 @@ from sensors import TOF
 
 target_dist = 40  # was 40 before
 base_speed = 40000
-startup_time = 1000
-calc_timer = 0
+startup_time = 10
 
-p_val = 500  # burde ikke komme over 550
-i_val = 0.005
+p_val = 700  # TODO latest change needs testing
+i_val = 0.0005
 
 i_sum = 0
 
@@ -20,50 +19,36 @@ i_sum = 0
 def pi_calc(cm):
     global i_sum, p_val, i_val, target_dist, base_speed
     error = target_dist - cm
-    print("cm:", cm)
 
-    if not 25 < error > -39:
+    if 39 < error or error < -25:
         if error > 0:
-            error = 25
+            error = 39
         else:
-            error = -39
+            error = -25
     p = error * p_val
 
-    i_sum = i_sum + i_val * error
+    i_sum = i_sum + (i_val * error)
 
-    if not 5 > i_sum > -5:
-        if i_sum > 5:
-            i_sum = 5
+    if not 1000 > i_sum > -1000:
+        if i_sum > 1:
+            i_sum = 1000
         else:
-            i_sum = -5
+            i_sum = -1000
 
     duty = p + i_sum
-    print("duty:", duty)
-    if duty + base_speed >= 65535 / 2:
-        r_duty = int(duty - base_speed)
-        l_duty = int((duty + base_speed) / 2)
-    else:
-        r_duty = int(duty - base_speed)
-        l_duty = int(duty + base_speed)
 
+    r_duty = int(base_speed + duty)
+    l_duty = int(base_speed - duty)
     return r_duty, l_duty
 
 
 def wall_main(done=False):
-    global startup_time, calc_timer
     if done:
-        startup_time = 1000
         motor.RC_car.stop()
-    if startup_time:
-        startup_time -= 5  # ms
-        return
-    if calc_timer <= 0:
-        TOF.calc_distance_wall()
-        calc_timer = 20
-    else:
-        calc_timer -= 1
 
     r_duty, l_duty = pi_calc(TOF.get_distance_wall())
+    print("right", r_duty)
+    print("left", l_duty)
     motor.RC_car.wall_movement(r_duty, l_duty)
 
 

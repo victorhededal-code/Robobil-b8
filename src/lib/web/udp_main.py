@@ -1,90 +1,68 @@
 # /udp_main.py
 from movement import motor
-from network import WLAN
-from modes import Sumo, Wall, Fodbold
-from sensors import REF_sens, TOF, get_bettery, hall_sens
+from modes import Sumo, Wall, Fodbold, check_mode
+from sensors import REF_sens, TOF  # get_bettery, hall_sens
 import socket
-
-wall = False
-
-sumo = False
-
-fodbold = False
 
 
 def UDP_Listen():
-    global wall, sumo, fodbold
     # Internet protocol, UDP
     soc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
+        mode = check_mode.check_active_mode()
         soc.bind(("0.0.0.0", 12345))
-        try:
-            # Wait for a command
-            data, addr = soc.recvfrom(1024)
-            # Convert data from bytes to string
-            data = data.decode('ascii').strip('\n').lower()
-        except OSError:
-            data = "123"
-
+        # Wait for a command
+        data, addr = soc.recvfrom(1024)
+        # Convert data from bytes to string
+        data = data.decode('ascii').strip('\n').lower()
         # Handle command
 
         if data == '1':
             REF_sens.sumo_init(False)
-            fodbold = True
-            Fodbold.control(data)
+            check_mode.change_mode("ball")
+
         elif data == '2':
             REF_sens.sumo_init(False)
-            wall = True
-            TOF.reset_wall()
-            Wall.wall_main()
-        elif data == '3':
-            sumo = True
-            REF_sens.sumo_init(sumo)
-            REF_sens.reset_ref()
-            TOF.reset_sumo()
-            Sumo.find_box()
-        elif data == 'space':
-            motor.RC_car.stop()
-        elif data == '5':
-            bettery_power, bettery_percentage = get_bettery.bettery_calc()
-            print("battery has ", bettery_power, "V\nThe battery has ", bettery_percentage, "% power")
+            check_mode.change_mode("wall")
 
-        if wall:
+        elif data == '3':
+            check_mode.change_mode("sumo")
+            REF_sens.sumo_init(True)
+            REF_sens.reset_ref()
+
+        if mode == "wall":
             if data == "space":
-                wall = False
                 Wall.wall_main(True)
                 motor.RC_car.stop()
             else:
                 TOF.reset_sumo()
                 Wall.wall_main()
-        elif sumo:
+
+        elif mode == "sumo":
             if data == "space":
-                sumo = False
-                REF_sens.sumo_init(sumo)
+                REF_sens.sumo_init(False)
                 Sumo.find_box(True)
             else:
-                TOF.reset_wall()
                 Sumo.find_box()
-        elif fodbold:
-            if data == "space":
-                fodbold = False
-                motor.RC_car.stop()
-            else:
-                TOF.reset_wall()
+
+        elif mode == "ball":
                 TOF.reset_sumo()
                 Fodbold.control(data)
+
         else:
-            TOF.reset_wall()
             TOF.reset_sumo()
         soc.close()
 
-    except Exception as e:
-        # If the program is interrupted, we need to close the port
+    except OSError:
+        mode = check_mode.check_active_mode()
+        if mode == "wall":
+            TOF.reset_sumo()
+            Wall.wall_main()
+
+        elif mode == "sumo":
+            Sumo.find_box()
+
         soc.close()
-        raise e  # Re-raise the error, so the program exits properly
 
-
-def printing_task():
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGoing at {hall_sens.calc_speed()} cmps"
-          f"\n\n\nBattery has {get_bettery.bettery_calc()} V")
-          #f"Battery has {get_bettery.bettery_calc_procentage()}%")
+# def printing_task():
+#    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGoing at: {hall_sens.get()} mps\nBattery has: {get_bettery.bettery_calc()} V")

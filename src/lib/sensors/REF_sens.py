@@ -23,7 +23,6 @@ def irq_handler(REF_sens):
     if sumo:
         box = False
         edge = True
-        motor.RC_car.stop()
     else:
         pass
 
@@ -34,9 +33,11 @@ def edge_check():
 def edge_reset():
     global edge
     edge = False
+
 def found_box():
     global box
     box = True
+
 def check_box():
     global box
     return box
