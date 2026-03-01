@@ -1,7 +1,7 @@
 # /udp_main.py
 from movement import motor
 from modes import Sumo, Wall, Fodbold, check_mode
-from sensors import REF_sens, TOF  # get_bettery, hall_sens
+from sensors import REF_sens, TOF, battery, hall_sens
 import socket
 
 
@@ -35,7 +35,6 @@ def UDP_Listen():
                 Wall.wall_main(True)
                 motor.RC_car.stop()
             else:
-                TOF.reset_sumo()
                 Wall.wall_main()
 
         elif mode == "sumo":
@@ -46,17 +45,13 @@ def UDP_Listen():
                 Sumo.find_box()
 
         elif mode == "ball":
-                TOF.reset_sumo()
                 Fodbold.control(data)
 
-        else:
-            TOF.reset_sumo()
         soc.close()
 
     except OSError:
         mode = check_mode.check_active_mode()
         if mode == "wall":
-            TOF.reset_sumo()
             Wall.wall_main()
 
         elif mode == "sumo":
@@ -64,5 +59,5 @@ def UDP_Listen():
 
         soc.close()
 
-# def printing_task():
-#    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGoing at: {hall_sens.get()} mps\nBattery has: {get_bettery.bettery_calc()} V")
+def printing_task():
+    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCurrent active mode: {check_mode.check_active_mode()}\n\nGoing at: {hall_sens.get_speed()} CMps\n\nBattery has: {battery.get_battery()} V")

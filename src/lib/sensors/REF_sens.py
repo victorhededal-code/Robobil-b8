@@ -26,11 +26,11 @@ def irq_handler(REF_sens):
     else:
         pass
 
-def edge_check():
+def check_edge():
     global edge
     return edge
 
-def edge_reset():
+def reset_edge():
     global edge
     edge = False
 

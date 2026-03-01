@@ -1,16 +1,11 @@
-# current problems summerized
-# 1. TOF for wall currently does not return correct values, for some fucking reason (always return 500+)
-# 2. we are currently always driving into a wall, when close to wall it will try to drive straight, when away from wall  it turns into wall
-# 3. duty is almost always negative, this is big problem, as code is made with intention of duty being positive
-# 4. I am getting very annoyed :D
 from movement import motor
 from sensors import TOF
 
-target_dist = 40  # was 40 before
-base_speed = 40000
-startup_time = 10
+target_dist = 35    # was 40 before
+base_speed = 60000
+startup_time = 25
 
-p_val = 700  # TODO latest change needs testing
+p_val = 2300
 i_val = 0.0005
 
 i_sum = 0
@@ -18,37 +13,46 @@ i_sum = 0
 
 def pi_calc(cm):
     global i_sum, p_val, i_val, target_dist, base_speed
+    print(cm)
     error = target_dist - cm
-
-    if 39 < error or error < -25:
+    print(error)
+    if 25 < error or error < -20:
         if error > 0:
-            error = 39
+            error = 25
         else:
-            error = -25
+            error = -20
     p = error * p_val
 
-    i_sum = i_sum + (i_val * error)
+    i_sum = i_sum + i_val * error
 
-    if not 1000 > i_sum > -1000:
-        if i_sum > 1:
-            i_sum = 1000
-        else:
-            i_sum = -1000
+    if not 5000 > i_sum > -5000:
+         if i_sum >= 0:
+             i_sum = 5000
+         else:
+              i_sum = -5000
 
     duty = p + i_sum
-
-    r_duty = int(base_speed + duty)
-    l_duty = int(base_speed - duty)
+    if error > 0:
+        r_duty = base_speed
+        l_duty = int(base_speed - duty)
+    else:
+        r_duty = int(base_speed + duty)
+        l_duty = base_speed
     return r_duty, l_duty
 
 
 def wall_main(done=False):
+    global startup_time
     if done:
+        startup_time = 5
         motor.RC_car.stop()
+    if startup_time != 0:
+        startup_time -= 1
+        return
 
     r_duty, l_duty = pi_calc(TOF.get_distance_wall())
-    print("right", r_duty)
-    print("left", l_duty)
+    print("r_duty:", r_duty)
+    print("\n\n\nl_duty:", l_duty)
     motor.RC_car.wall_movement(r_duty, l_duty)
 
 

@@ -3,12 +3,11 @@ import time
 from machine import Pin
 
 wall_dist = 0
+wall_list = []
 gy53_wall = Pin(14, Pin.IN)  # Initialize GY-53 I2C pin
 pwm_start_wall = 0
-dist_1 = False
-dist_2 = False
-dist_3 = False
-
+list_count = 0
+raw_dist = 0
 ####################################
 ###             Wall             ###
 ####################################
@@ -18,58 +17,73 @@ def irq_init_wall():
 
 
 def irq_handler_wall( gy53_wall ):
-    global pwm_start_wall, wall_dist, dist_1, dist_2, dist_3
+    global pwm_start_wall, wall_dist, list_count, raw_dist
     if gy53_wall.value() == 1:
         pwm_start_wall = time.ticks_us()
     else:
         pwm_stop_wall = time.ticks_us()
-        cm = (pwm_stop_wall - pwm_start_wall) / 100
-        if not dist_1:
-            dist_1 = cm
-        elif not dist_2:
-            dist_2 = cm
-        elif not dist_3:
-            dist_3 = cm
-            temp_list = [dist_1, dist_2, dist_3]
-            temp_list.sort()
-            wall_dist = temp_list[1]
-            temp_list.clear()
-            dist_1 = False
-            dist_2 = False
-            dist_3 = False
+        cm = (pwm_stop_wall - pwm_start_wall) // 100
+        #wall_list.append(cm)
+        raw_dist = cm
+        #if list_count >= 3:
+        #    temp_list = wall_list.copy()
+        #    temp_list.sort()
+        #    wall_dist = temp_list[1]
+        #    wall_list.pop(0)
 
+        #else:
+        #    list_count += 1
 
-#def calc_distance_wall():
-#    global wall_list, temp_wall, wall_list, wall_dist
-    #print("\nwall list pre overwrite", wall_list)
-#    wall_dist = 0
-#    cut = len(wall_list)
-#    temp_wall = wall_list[(cut - 5):]
-    #print("\ntemporary list",temp_wall)
-#    wall_list = temp_wall
-   # print("\nwall list post overwrite",wall_list)
-#    temp_wall.sort()
-#    wall_dist = temp_wall[2]
-    #print("\n\nwall dist",temp_wall[1])
 
 def get_distance_wall():
     global wall_dist
     return wall_dist
+
+def get_raw_dist():
+    global raw_dist
+    return raw_dist
 
 
 ####################################
 ###             Sumo             ###
 ####################################
 
-
+"""
 sumo_list = []
 temp_sumo = []
 sumo_dist = 0
-gy53_sumo = Pin(22, Pin.IN)  # Initialize GY-53 I2C pin
 pwm_start_sumo = 0
 pwm_stop_sumo = 0
+"""
+gy53_sumo = Pin(22, Pin.IN)  # Initialize GY-53 I2C pin
+sumo_list = []
+sumo_dist = 0
+pwm_sumo = 0
+sumo_count = 0
 
+def sumo_irq():
+    gy53_sumo.irq(trigger = Pin.IRQ_RISING | Pin.IRQ_FALLING,handler = sumo_handler )
 
+def sumo_handler( gy53_sumo ):
+    global pwm_sumo, sumo_dist, sumo_list, sumo_count
+    if gy53_sumo.value() == 1:
+        pwm_sumo = gy53_sumo.value()
+    else:
+        pwm_sumo_end = gy53_sumo.value()
+        dist = (pwm_sumo_end - pwm_sumo) // 100
+        sumo_list.append(dist)
+        if sumo_count >= 5:
+            temp_list = sumo_list.copy()
+            temp_list.sort()
+            sumo_dist = temp_list[2]
+            sumo_list.pop(0)
+        else:
+            sumo_count += 1
+
+def get_sumo_dist():
+    global sumo_dist
+    return sumo_dist
+"""
 def irq_init_sumo():
     gy53_sumo.irq(trigger=Pin.IRQ_RISING |Pin.IRQ_FALLING, handler = irq_handler_sumo)
 
@@ -83,7 +97,6 @@ def irq_handler_sumo( gy53_sumo ):
         cm = ((pwm_stop_sumo - pwm_start_sumo) // 100)
         if len(sumo_list) < 20:
             sumo_list.append(cm)
-5
 
 def calc_distance_sumo():
     global sumo_list, temp_sumo, sumo_list, sumo_dist
@@ -105,4 +118,5 @@ def get_distance_sumo():
 
 def reset_sumo():
     global sumo_list
-    sumo_list = []
+    sumo_list = []'
+"""

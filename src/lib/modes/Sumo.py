@@ -1,33 +1,31 @@
 from movement import motor
 from sensors import TOF, REF_sens
 
-from src.lib.movement.motor import RC_car
-
 push_count = 0
 reset = False
-startup_time = 1000  # ms
-calc_timer = 0
-new_place_time = 2000
+startup_time = 50  # 500 ms
+start_stop_time = 15  # 400 ms
+new_place_time = 200  # 2000 ms
 
 
 def find_box(done=False) -> None:
-    global reset, push_count, startup_time, calc_timer, new_place_time
+    global reset, push_count, startup_time, start_stop_time, new_place_time
     if done:
-        startup_time = 1000
+        startup_time = 50
         motor.RC_car.stop()
     if startup_time:
         startup_time -= 5  # ms
         return
 
-    if calc_timer <= 0:
-        TOF.calc_distance_sumo()
-        calc_timer = 20
+    if start_stop_time <= 0:
+        start_stop_time = 15
     else:
-        calc_timer -= 1
+        start_stop_time -= 1
+
     edge = REF_sens.check_edge()
     if edge:
         motor.RC_car.stop()
-        REF_sens.edge_reset()
+        REF_sens.reset_edge()
 
     box = REF_sens.check_box()
     if reset:
@@ -40,7 +38,7 @@ def find_box(done=False) -> None:
             else:
                 reset = False
     elif not box:
-        if new_place_time<=0:
+        if new_place_time <= 0:
             if not edge:
                 push()
             else:
@@ -48,20 +46,21 @@ def find_box(done=False) -> None:
                     go_back()
                     push_count -= 1
                 else:
-                    new_place_time = 2000
+                    new_place_time = 200
                     push_count = 0
 
         else:
-            cm = TOF.get_distance_sumo()
-            if cm < 80:
+            cm = TOF.get_sumo_dist()
+            if cm < 100:
                 REF_sens.found_box()
                 reset = True
+                print(cm)
             else:
-                if calc_timer <= 10:
+                if start_stop_time >= 5:
                     motor.RC_car.stop()
                 else:
                     turn()
-                    new_place_time -= 5
+                    new_place_time -= 1
 
 
 def push() -> None:

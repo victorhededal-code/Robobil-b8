@@ -32,16 +32,6 @@ class DCmotor:
             duty_cyclen = 0
         else:
             duty_cyclen = int(self.min_duty + ((self.max_duty - self.min_duty) * (self.speed / 100)))
-            print(self.min_duty)
-            print( self.max_duty)
-            print(self.speed)
-
-            # duty = min + ((max - min) * (80 / 100))
-            # duty = 15000 + (50000 * 0,8)
-            # 50000 * 0,8 = 40000
-            # duty = 15000 + 40000
-            # duty = 55000
-        #print(duty_cyclen)
         return duty_cyclen
 
     def forward(self, speed: int):

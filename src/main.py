@@ -3,7 +3,7 @@ input()
 # Import external modules
 #########################################################
 from machine import Timer
-from sensors import REF_sens, TOF# hall_sens, get_bettery
+from sensors import REF_sens, TOF, battery, hall_sens
 from web import udp_main
 import TM
 
@@ -23,19 +23,19 @@ tim.init(freq=1000, mode=Timer.PERIODIC, callback=tick)
 #########################################################
 # internal init modules
 #########################################################
-TOF.irq_init_sumo()
+TOF.sumo_irq()
 TOF.irq_init_wall()
 REF_sens.irq_init()
-#hall_sens.irq_hall_left_init()
-#hall_sens.irq_hall_right_init()
+hall_sens.irq_hall_left_init()
+hall_sens.irq_hall_right_init()
 
 
 #########################################################
 # CREATS TASKS
-#########################################################
-TM.create_task("UDP_LISTENER", 100, udp_main.UDP_Listen)
-#TM.create_task( "CALC_SPEED", 1000, hall_sens.calc_speed )
-#TM.create_task( "PRINT_TO_TERMINAL", 100, udp_main.printing_task)
+TM.create_task( "CALC_BATTERY", 180000, battery.calc_battery )
+TM.create_task( "CALC_SPEED", 1000, hall_sens.calc_speed )
+TM.create_task( "UDP_LISTENER", 10, udp_main.UDP_Listen )
+TM.create_task( "PRINT_TO_TERMINAL", 1000, udp_main.printing_task )
 #########################################################
 # EXECUTES TASKS
 #########################################################

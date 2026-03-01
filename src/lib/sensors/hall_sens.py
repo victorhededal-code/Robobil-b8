@@ -36,19 +36,16 @@ def right_irq_counter( hall_right ):
 #
 ##############################################################
 def calc_speed():
-    global speed
-    global left_counter, right_counter
-    left_rpm = left_counter * 60
+    global left_counter, right_counter, speed
+    left_speed = ( left_counter * pi * 6.5 )
     left_counter = 0
-    right_rpm = right_counter * 60
+    right_speed = ( right_counter * pi * 6.5 )
     right_counter = 0 
 
-    left_speed = (left_rpm * pi * 6.5) / 60 # left wheels speed in cmps
-    right_speed = (right_rpm * pi * 6.5) / 60 # right wheels speed in cmps
-    
-    speed = (right_speed + left_speed) // 2 # speed in cmps
 
-
+def get_speed():
+    global speed
+    return speed
 
 
 
