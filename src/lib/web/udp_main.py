@@ -28,14 +28,13 @@ def UDP_Listen():
         elif data == '3':
             check_mode.change_mode("sumo")
             REF_sens.sumo_init(True)
-            REF_sens.reset_ref()
 
         if mode == "wall":
             if data == "space":
-                Wall.wall_main(True)
+                Wall.wall_emergency_main(True)
                 motor.RC_car.stop()
             else:
-                Wall.wall_main()
+                Wall.wall_emergency_main()
 
         elif mode == "sumo":
             if data == "space":
@@ -52,7 +51,7 @@ def UDP_Listen():
     except OSError:
         mode = check_mode.check_active_mode()
         if mode == "wall":
-            Wall.wall_main()
+            Wall.wall_emergency_main()
 
         elif mode == "sumo":
             Sumo.find_box()
